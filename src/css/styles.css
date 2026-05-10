@@ -798,7 +798,7 @@ footer {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url('https://static.wixstatic.com/media/c4fe9a_2ac6058789b44eeebe7d20296b50f4dd~mv2.jpg/v1/fill/w_2500,h_1330,al_c/c4fe9a_2ac6058789b44eeebe7d20296b50f4dd~mv2.jpg');
+  background-image: url('../../assets/images/hero-bg.jpg');
   background-size: cover;
   background-position: center 30%;
   filter: sepia(40%) brightness(0.65);
@@ -1131,7 +1131,7 @@ footer {
 .escorial-bg {
   position: absolute;
   inset: 0;
-  background-image: url('https://static.wixstatic.com/media/c4fe9a_30ed886b63d648f28575e72c455e9191~mv2.jpg/v1/fill/w_2000,h_1000,al_c/c4fe9a_30ed886b63d648f28575e72c455e9191~mv2.jpg');
+  background-image: url('../../assets/images/mapa-virreinatos.jpg');
   background-size: cover;
   background-position: center;
   filter: sepia(30%) brightness(0.5);

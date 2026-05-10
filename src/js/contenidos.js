@@ -16,7 +16,7 @@ const CONTENIDOS_SIMULADOS = [
     titulo: "Presentación del libro «Justicia Real en la América Española»",
     autor: "César Pérez Guevara",
     fecha: "21 Abr 2026",
-    imagen: "https://i.ytimg.com/vi/EZ2i15y-P3Y/maxresdefault.jpg",
+    imagen: "../../assets/images/yt-EZ2i15y-P3Y.jpg",
     descripcion: "Un análisis riguroso del sistema judicial que España desplegó en el Nuevo Mundo, desmintiendo las narrativas que lo reducen a mera opresión.",
     url: "https://youtu.be/EZ2i15y-P3Y",
     etiquetas: ["Justicia", "América", "Imperio"]
@@ -27,7 +27,7 @@ const CONTENIDOS_SIMULADOS = [
     titulo: "El papel de los indígenas en la conquista de América: Mesoamérica",
     autor: "José J. Laorden",
     fecha: "8 Abr 2026",
-    imagen: "https://i.ytimg.com/vi/afx1w-wiLCg/hqdefault.jpg",
+    imagen: "../../assets/images/yt-afx1w-wiLCg.jpg",
     descripcion: "Revisión histórica del papel activo de los pueblos mesoamericanos como aliados y actores clave en el proceso de conquista del continente.",
     url: "https://youtu.be/afx1w-wiLCg",
     etiquetas: ["Indígenas", "Conquista", "Mesoamérica"]
@@ -74,7 +74,7 @@ const CONTENIDOS_SIMULADOS = [
     titulo: "El Barómetro de la Hispanidad: ¿Cómo nos vemos los hispanos?",
     autor: "Equipo Investigador",
     fecha: "20 Ene 2026",
-    imagen: "https://static.wixstatic.com/media/c4fe9a_0536debe364e46ba9ad0e91821ff5a89~mv2.jpg/v1/fill/w_800,h_500,al_c/c4fe9a_0536debe364e46ba9ad0e91821ff5a89~mv2.jpg",
+    imagen: "../../assets/images/barometro.jpg",
     descripcion: "Presentación de los resultados preliminares del Barómetro sobre la Hispanidad: datos, percepciones y tendencias en 12 países.",
     url: "#",
     etiquetas: ["Barómetro", "Investigación", "Identidad"]

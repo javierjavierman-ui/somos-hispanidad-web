@@ -14,7 +14,7 @@ Asociación Cultural sin ánimo de lucro dedicada a divulgar el legado históric
 ├── .gitignore              ← Archivos que NO se suben a GitHub
 ├── README.md               ← Este archivo
 │
-├── /public/
+├── /assets/
 │   ├── /images/            ← Imágenes del proyecto (logos, fotos)
 │   └── /documents/         ← PDFs y documentos descargables
 │

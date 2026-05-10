@@ -1,0 +1,16 @@
+{
+  "name": "somos-hispanidad",
+  "version": "1.0.0",
+  "description": "Web oficial de la Asociación Cultural Somos Hispanidad — HTML, CSS, JavaScript",
+  "private": true,
+  "scripts": {
+    "dev": "npx live-server --port=3000 --open=index.html",
+    "start": "npx live-server --port=3000"
+  },
+  "keywords": ["hispanidad", "cultura", "historia", "españa", "iberoamerica"],
+  "author": "Somos Hispanidad",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

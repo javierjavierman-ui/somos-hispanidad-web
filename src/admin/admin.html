@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel de Administración — Somos Hispanidad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600&family=Cinzel:wght@400;600&family=Lato:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<!-- AVISO: sin login real todavía -->
+<div class="admin-notice">
+  ⚙ <strong>Modo Desarrollo:</strong> Acceso sin autenticación. El sistema de login con Supabase se añadirá en una fase posterior.
+</div>
+
+<!-- LAYOUT PRINCIPAL -->
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="admin-logo">Somos <span>Hispanidad</span><small>Admin</small></div>
+    <nav class="admin-nav">
+      <a href="#" class="admin-nav-link active" data-panel="eventos">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Eventos
+      </a>
+      <a href="#" class="admin-nav-link" data-panel="contenidos">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Contenidos
+      </a>
+      <a href="#" class="admin-nav-link" data-panel="autores">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Autores
+      </a>
+      <a href="#" class="admin-nav-link" data-panel="simpatizantes">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Simpatizantes
+      </a>
+      <a href="#" class="admin-nav-link" data-panel="mensajes">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Mensajes
+      </a>
+    </nav>
+    <div class="admin-sidebar-footer">
+      <a href="../../index.html" class="admin-nav-link" style="opacity:0.6;font-size:0.7rem">← Ver web pública</a>
+    </div>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="admin-main">
+    <!-- TOPBAR -->
+    <div class="admin-topbar">
+      <h1 class="admin-topbar-title" id="panel-title">Gestión de Eventos</h1>
+      <div class="admin-topbar-actions">
+        <span class="admin-user">Admin</span>
+        <a href="#" class="admin-btn admin-btn-outline">Cerrar sesión</a>
+      </div>
+    </div>
+
+    <!-- PANEL: EVENTOS -->
+    <div class="admin-panel active" id="panel-eventos">
+      <div class="admin-panel-header">
+        <h2>Eventos</h2>
+        <button class="admin-btn admin-btn-primary">+ Nuevo evento</button>
+      </div>
+      <div class="admin-supabase-note">
+        📌 En producción, esta tabla se cargará desde la tabla <code>eventos</code> de Supabase.
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr><th>Fecha</th><th>Título</th><th>Tipo</th><th>Lugar</th><th>Estado</th><th>Acciones</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>20 Jun 2026</td><td>Visita al Monasterio del Escorial</td><td>Visita Cultural</td><td>El Escorial, Madrid</td><td><span class="admin-badge green">Abierto</span></td><td><button class="admin-btn-sm">Editar</button> <button class="admin-btn-sm red">Eliminar</button></td></tr>
+            <tr><td>15 Jul 2026</td><td>Conferencia: La España Olvidada</td><td>Conferencia</td><td>Madrid</td><td><span class="admin-badge green">Abierto</span></td><td><button class="admin-btn-sm">Editar</button> <button class="admin-btn-sm red">Eliminar</button></td></tr>
+            <tr><td>10 Sep 2026</td><td>Ciclo Indígenas — Perú y el Caribe</td><td>Charla Online</td><td>Zoom</td><td><span class="admin-badge yellow">Próximo</span></td><td><button class="admin-btn-sm">Editar</button> <button class="admin-btn-sm red">Eliminar</button></td></tr>
+            <tr><td>12 Oct 2026</td><td>Barómetro de la Hispanidad 2026</td><td>Presentación</td><td>Madrid</td><td><span class="admin-badge yellow">Próximo</span></td><td><button class="admin-btn-sm">Editar</button> <button class="admin-btn-sm red">Eliminar</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PANEL: CONTENIDOS -->
+    <div class="admin-panel" id="panel-contenidos">
+      <div class="admin-panel-header">
+        <h2>Contenidos</h2>
+        <button class="admin-btn admin-btn-primary">+ Nuevo contenido</button>
+      </div>
+      <div class="admin-supabase-note">
+        📌 En producción, esta tabla se cargará desde la tabla <code>contenidos</code> de Supabase.
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr><th>Fecha</th><th>Título</th><th>Tipo</th><th>Autor</th><th>Acciones</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>21 Abr 2026</td><td>Justicia Real en la América Española</td><td>Conferencia</td><td>César Pérez Guevara</td><td><button class="admin-btn-sm">Editar</button> <button class="admin-btn-sm red">Eliminar</button></td></tr>
+            <tr><td>8 Abr 2026</td><td>El papel de los indígenas en la conquista</td><td>Charla</td><td>José J. Laorden</td><td><button class="admin-btn-sm">Editar</button> <button class="admin-btn-sm red">Eliminar</button></td></tr>
+            <tr><td>18 Mar 2026</td><td>Terror Bolivariano</td><td>Artículo</td><td>Francisco Massó</td><td><button class="admin-btn-sm">Editar</button> <button class="admin-btn-sm red">Eliminar</button></td></tr>
+            <tr><td>2 Mar 2026</td><td>La lengua como puente</td><td>Artículo</td><td>Redacción</td><td><button class="admin-btn-sm">Editar</button> <button class="admin-btn-sm red">Eliminar</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PANEL: AUTORES -->
+    <div class="admin-panel" id="panel-autores">
+      <div class="admin-panel-header">
+        <h2>Autores</h2>
+        <button class="admin-btn admin-btn-primary">+ Nuevo autor</button>
+      </div>
+      <div class="admin-supabase-note">
+        📌 En producción, esta tabla se cargará desde la tabla <code>autores</code> de Supabase.
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr><th>Nombre</th><th>Cargo</th><th>Especialidad</th><th>Acciones</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>César Pérez Guevara</td><td>Historiador</td><td>Derecho colonial</td><td><button class="admin-btn-sm">Editar</button> <button class="admin-btn-sm red">Eliminar</button></td></tr>
+            <tr><td>José J. Laorden</td><td>Investigador</td><td>Conquista y pueblos indígenas</td><td><button class="admin-btn-sm">Editar</button> <button class="admin-btn-sm red">Eliminar</button></td></tr>
+            <tr><td>Francisco Massó</td><td>Analista político</td><td>Revisionismo histórico</td><td><button class="admin-btn-sm">Editar</button> <button class="admin-btn-sm red">Eliminar</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PANEL: SIMPATIZANTES -->
+    <div class="admin-panel" id="panel-simpatizantes">
+      <div class="admin-panel-header">
+        <h2>Simpatizantes</h2>
+        <button class="admin-btn admin-btn-outline">Exportar CSV</button>
+      </div>
+      <div class="admin-supabase-note">
+        📌 En producción, esta tabla se cargará desde la tabla <code>simpatizantes</code> de Supabase, con datos de inscripciones a eventos.
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr><th>Nombre</th><th>Email</th><th>Evento</th><th>Fecha registro</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>María García</td><td>maria@ejemplo.es</td><td>Visita al Escorial</td><td>1 May 2026</td></tr>
+            <tr><td>Carlos Rodríguez</td><td>carlos@ejemplo.es</td><td>Conferencia España Olvidada</td><td>3 May 2026</td></tr>
+            <tr><td>Ana Martínez</td><td>ana@ejemplo.es</td><td>Visita al Escorial</td><td>5 May 2026</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PANEL: MENSAJES -->
+    <div class="admin-panel" id="panel-mensajes">
+      <div class="admin-panel-header">
+        <h2>Mensajes Recibidos</h2>
+        <button class="admin-btn admin-btn-outline">Marcar todos como leídos</button>
+      </div>
+      <div class="admin-supabase-note">
+        📌 En producción, esta tabla se cargará desde la tabla <code>mensajes</code> de Supabase, enviados desde el formulario de contacto.
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr><th>Fecha</th><th>Nombre</th><th>Email</th><th>Asunto</th><th>Estado</th><th>Acción</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>8 May 2026</td><td>Pedro Sánchez</td><td>pedro@ejemplo.es</td><td>Consulta sobre eventos</td><td><span class="admin-badge yellow">Nuevo</span></td><td><button class="admin-btn-sm">Ver</button></td></tr>
+            <tr><td>5 May 2026</td><td>Laura López</td><td>laura@ejemplo.es</td><td>Colaboración</td><td><span class="admin-badge green">Leído</span></td><td><button class="admin-btn-sm">Ver</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../js/supabaseClient.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

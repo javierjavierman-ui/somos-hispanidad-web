@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Contacta con Somos Hispanidad. Estamos en Torrelodones, Madrid.">
+<title>Contacto — Somos Hispanidad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<nav id="navbar">
+  <a href="../../index.html" class="nav-logo">Somos <span>Hispanidad</span></a>
+  <ul class="nav-links">
+    <li><a href="../../index.html">Inicio</a></li>
+    <li><a href="asociacion.html">La Asociación</a></li>
+    <li><a href="eventos.html">Eventos</a></li>
+    <li><a href="contenidos.html">Contenidos</a></li>
+    <li><a href="autores.html">Autores</a></li>
+    <li><a href="contacto.html" class="active">Contacto</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="../../index.html" onclick="closeMobile()">Inicio</a>
+  <a href="asociacion.html" onclick="closeMobile()">La Asociación</a>
+  <a href="eventos.html" onclick="closeMobile()">Eventos</a>
+  <a href="contenidos.html" onclick="closeMobile()">Contenidos</a>
+  <a href="autores.html" onclick="closeMobile()">Autores</a>
+  <a href="contacto.html" onclick="closeMobile()">Contacto</a>
+</div>
+
+<div class="page-header">
+  <p class="page-header-label">Conecta con Nosotros</p>
+  <h1>Contacto</h1>
+  <div class="page-header-divider"><span style="color:var(--gold)">✦</span></div>
+</div>
+
+<section style="background:var(--cream)">
+  <div class="section-inner">
+    <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:start">
+      <!-- FORMULARIO -->
+      <div>
+        <div class="reveal">
+          <span class="section-label">Escríbenos</span>
+          <h2 class="section-title">Contacta y Mantente Informado</h2>
+          <div class="ornament"><div class="ornament-diamond"></div><div class="ornament-line"></div></div>
+          <p class="body-text">¿Quieres unirte a nuestra comunidad, proponer contenidos o simplemente saber más? Escríbenos y te responderemos a la mayor brevedad.</p>
+        </div>
+
+        <!-- Aviso Supabase -->
+        <div class="supabase-notice" style="margin-top:24px">
+          <strong>⚙ Nota técnica:</strong> Este formulario está preparado para conectarse con Supabase en una fase posterior del proyecto. Actualmente, el mensaje <strong>no se envía ni se almacena</strong>. Para contactarnos ahora, escribe directamente a <a href="mailto:contacto@somoshispanidad.es" style="color:var(--sepia-dark)">contacto@somoshispanidad.es</a>.
+        </div>
+
+        <!-- Mensaje éxito -->
+        <div id="contacto-exito" class="form-success" style="margin-top:24px;display:none">
+          ✦ Mensaje recibido. Te respondemos en breve.
+        </div>
+
+        <!-- Formulario -->
+        <form id="form-contacto" class="form-group">
+          <input class="form-input" type="text" id="contacto-nombre" placeholder="Tu nombre *" required>
+          <input class="form-input" type="email" id="contacto-email" placeholder="Tu correo electrónico *" required>
+          <input class="form-input" type="text" id="contacto-asunto" placeholder="Asunto">
+          <textarea class="form-input" id="contacto-mensaje" placeholder="Tu mensaje..." rows="5" required></textarea>
+          <button type="submit" class="btn-primary" style="align-self:flex-start;border:none;cursor:pointer">Enviar Mensaje</button>
+        </form>
+      </div>
+
+      <!-- SIDEBAR INFO -->
+      <div class="reveal" style="transition-delay:0.2s">
+        <h3 style="font-family:'Cinzel',serif;font-size:1.1rem;color:var(--sepia-deep);margin-bottom:20px;letter-spacing:0.05em">Somos Hispanidad</h3>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--ink-soft);line-height:2">
+          <p>28250 Torrelodones<br>Madrid, España</p>
+          <br>
+          <p><a href="mailto:contacto@somoshispanidad.es" style="color:var(--sepia-dark);text-decoration:none">contacto@somoshispanidad.es</a></p>
+        </div>
+        <div class="social-row">
+          <a href="https://www.facebook.com" class="social-icon" title="Facebook" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://www.twitter.com" class="social-icon" title="X / Twitter" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://www.instagram.com" class="social-icon" title="Instagram" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://www.linkedin.com" class="social-icon" title="LinkedIn" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+        <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--cream-dark)">
+          <h4 style="font-family:'Lato',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--sepia);margin-bottom:12px">Páginas Amigas</h4>
+          <a href="https://protocolodesantapola.es/" target="_blank" rel="noopener" style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--sepia-dark);text-decoration:none">Protocolo de Santa Pola →</a>
+        </div>
+        <div style="margin-top:32px;padding:24px;background:var(--cream-dark);border-top:3px solid var(--gold)">
+          <p style="font-family:'Lato',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Muy Pronto</p>
+          <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--ink-soft);line-height:1.7">Nueva plataforma de conexión para la comunidad hispana. Mantente atento a nuestras novedades.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Somos <span>Hispanidad</span></div>
+        <p class="footer-desc">Ciudadanos comprometidos con rescatar la verdad histórica del imperio español y promover los lazos culturales entre España y el mundo hispano.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Navegación</p>
+        <ul class="footer-links">
+          <li><a href="../../index.html">Inicio</a></li>
+          <li><a href="asociacion.html">La Asociación</a></li>
+          <li><a href="eventos.html">Eventos</a></li>
+          <li><a href="contenidos.html">Contenidos</a></li>
+          <li><a href="autores.html">Autores</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Legal</p>
+        <ul class="footer-links">
+          <li><a href="privacidad.html">Política de Privacidad</a></li>
+          <li><a href="mailto:contacto@somoshispanidad.es">Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Somos Hispanidad · Todos los derechos reservados</p>
+      <a href="privacidad.html" class="footer-legal">Política de Privacidad</a>
+    </div>
+  </div>
+</footer>
+<a href="#" class="back-top" id="backTop" title="Volver al inicio">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</a>
+<script src="../js/main.js"></script>
+<script src="../js/supabaseClient.js"></script>
+<script src="../js/contacto.js"></script>
+</body>
+</html>

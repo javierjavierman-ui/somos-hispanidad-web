@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Artículos, vídeos y conferencias de Somos Hispanidad sobre la historia y cultura hispánica.">
+<title>Contenidos — Somos Hispanidad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+<style>
+  .filtros { display:flex; gap:12px; flex-wrap:wrap; margin-top:40px; margin-bottom:0; }
+  .filtro-btn {
+    font-family:'Lato',sans-serif; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase;
+    padding:8px 20px; border:1px solid var(--sepia-light); color:var(--sepia-dark); background:transparent;
+    cursor:pointer; transition:background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .filtro-btn:hover, .filtro-btn.active {
+    background:var(--gold); color:var(--ink); border-color:var(--gold);
+  }
+</style>
+</head>
+<body>
+<nav id="navbar">
+  <a href="../../index.html" class="nav-logo">Somos <span>Hispanidad</span></a>
+  <ul class="nav-links">
+    <li><a href="../../index.html">Inicio</a></li>
+    <li><a href="asociacion.html">La Asociación</a></li>
+    <li><a href="eventos.html">Eventos</a></li>
+    <li><a href="contenidos.html" class="active">Contenidos</a></li>
+    <li><a href="autores.html">Autores</a></li>
+    <li><a href="contacto.html">Contacto</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="../../index.html" onclick="closeMobile()">Inicio</a>
+  <a href="asociacion.html" onclick="closeMobile()">La Asociación</a>
+  <a href="eventos.html" onclick="closeMobile()">Eventos</a>
+  <a href="contenidos.html" onclick="closeMobile()">Contenidos</a>
+  <a href="autores.html" onclick="closeMobile()">Autores</a>
+  <a href="contacto.html" onclick="closeMobile()">Contacto</a>
+</div>
+
+<div class="page-header">
+  <p class="page-header-label">Divulgación Histórica y Cultural</p>
+  <h1>Contenidos</h1>
+  <div class="page-header-divider"><span style="color:var(--gold)">✦</span></div>
+</div>
+
+<section style="background:var(--warm-white)">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-label">Nuestros Contenidos</span>
+      <h2 class="section-title">Artículos, Vídeos y Conferencias</h2>
+      <div class="ornament"><div class="ornament-diamond"></div><div class="ornament-line"></div></div>
+      <p class="body-text">Selecciona una categoría o explora todo nuestro archivo de contenidos sobre la historia y cultura hispánica.</p>
+      <!-- Botones de filtro -->
+      <div class="filtros">
+        <button class="filtro-btn active" data-filtro="todos">Todos</button>
+        <button class="filtro-btn" data-filtro="Artículo">Artículos</button>
+        <button class="filtro-btn" data-filtro="Vídeo">Vídeos</button>
+        <button class="filtro-btn" data-filtro="Charla Temática">Charlas</button>
+        <button class="filtro-btn" data-filtro="Conferencia">Conferencias</button>
+      </div>
+    </div>
+    <!-- Tarjetas de contenido generadas por contenidos.js -->
+    <div id="lista-contenidos" class="cards-grid" style="margin-top:48px"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Somos <span>Hispanidad</span></div>
+        <p class="footer-desc">Ciudadanos comprometidos con rescatar la verdad histórica del imperio español y promover los lazos culturales entre España y el mundo hispano.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Navegación</p>
+        <ul class="footer-links">
+          <li><a href="../../index.html">Inicio</a></li>
+          <li><a href="asociacion.html">La Asociación</a></li>
+          <li><a href="eventos.html">Eventos</a></li>
+          <li><a href="contenidos.html">Contenidos</a></li>
+          <li><a href="autores.html">Autores</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Legal</p>
+        <ul class="footer-links">
+          <li><a href="privacidad.html">Política de Privacidad</a></li>
+          <li><a href="mailto:contacto@somoshispanidad.es">Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Somos Hispanidad · Todos los derechos reservados</p>
+      <a href="privacidad.html" class="footer-legal">Política de Privacidad</a>
+    </div>
+  </div>
+</footer>
+<a href="#" class="back-top" id="backTop" title="Volver al inicio">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</a>
+<script src="../js/main.js"></script>
+<script src="../js/supabaseClient.js"></script>
+<script src="../js/contenidos.js"></script>
+</body>
+</html>

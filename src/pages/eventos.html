@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Próximos eventos, conferencias y visitas culturales de Somos Hispanidad.">
+<title>Eventos — Somos Hispanidad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<nav id="navbar">
+  <a href="../../index.html" class="nav-logo">Somos <span>Hispanidad</span></a>
+  <ul class="nav-links">
+    <li><a href="../../index.html">Inicio</a></li>
+    <li><a href="asociacion.html">La Asociación</a></li>
+    <li><a href="eventos.html" class="active">Eventos</a></li>
+    <li><a href="contenidos.html">Contenidos</a></li>
+    <li><a href="autores.html">Autores</a></li>
+    <li><a href="contacto.html">Contacto</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="../../index.html" onclick="closeMobile()">Inicio</a>
+  <a href="asociacion.html" onclick="closeMobile()">La Asociación</a>
+  <a href="eventos.html" onclick="closeMobile()">Eventos</a>
+  <a href="contenidos.html" onclick="closeMobile()">Contenidos</a>
+  <a href="autores.html" onclick="closeMobile()">Autores</a>
+  <a href="contacto.html" onclick="closeMobile()">Contacto</a>
+</div>
+
+<div class="page-header">
+  <p class="page-header-label">Agenda Cultural</p>
+  <h1>Próximos Eventos</h1>
+  <div class="page-header-divider"><span style="color:var(--gold)">✦</span></div>
+</div>
+
+<!-- LISTA DE EVENTOS (generada por eventos.js) -->
+<section style="background:var(--warm-white)">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-label">Agenda</span>
+      <h2 class="section-title">Próximos Acontecimientos</h2>
+      <div class="ornament"><div class="ornament-diamond"></div><div class="ornament-line"></div></div>
+    </div>
+    <!-- Los eventos se insertan aquí automáticamente desde eventos.js -->
+    <div id="lista-eventos" style="margin-top:40px"></div>
+  </div>
+</section>
+
+<!-- FORMULARIO DE INSCRIPCIÓN -->
+<section style="background:var(--cream)">
+  <div class="section-inner">
+    <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:start">
+      <div class="reveal">
+        <span class="section-label">Inscripción</span>
+        <h2 class="section-title">Reserva tu Plaza</h2>
+        <div class="ornament"><div class="ornament-diamond"></div><div class="ornament-line"></div></div>
+        <p class="body-text">Rellena el formulario para reservar tu plaza en el evento que desees. Te confirmaremos la inscripción por correo electrónico.</p>
+
+        <!-- Aviso Supabase -->
+        <div class="supabase-notice" style="margin-top:24px">
+          <strong>⚙ Nota técnica:</strong> El formulario de inscripción está preparado para conectarse con Supabase en una fase posterior. Por el momento, la reserva no se guarda en ninguna base de datos. Para inscribirte, escríbenos directamente a <a href="mailto:contacto@somoshispanidad.es" style="color:var(--sepia-dark)">contacto@somoshispanidad.es</a>.
+        </div>
+
+        <!-- Mensaje de éxito -->
+        <div id="inscripcion-exito" class="form-success" style="margin-top:24px">
+          ✦ Solicitud recibida. Te contactaremos en breve para confirmar tu plaza.
+        </div>
+
+        <!-- Formulario -->
+        <form id="form-inscripcion" class="form-group">
+          <input class="form-input" type="text" id="insc-nombre" placeholder="Tu nombre completo *" required>
+          <input class="form-input" type="email" id="insc-email" placeholder="Tu correo electrónico *" required>
+          <input class="form-input" type="tel" id="insc-telefono" placeholder="Teléfono (opcional)">
+          <select class="form-select" id="select-evento" required>
+            <option value="">— Selecciona un evento —</option>
+            <!-- Opciones añadidas por eventos.js -->
+          </select>
+          <textarea class="form-input" id="insc-comentarios" placeholder="Comentarios o preguntas..." rows="3"></textarea>
+          <button type="submit" class="btn-primary" style="align-self:flex-start;border:none;cursor:pointer">Solicitar plaza</button>
+        </form>
+      </div>
+
+      <div class="reveal" style="transition-delay:0.2s">
+        <h3 style="font-family:'Cinzel',serif;font-size:1.1rem;color:var(--sepia-deep);margin-bottom:20px;letter-spacing:0.05em">Información General</h3>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--ink-soft);line-height:2">
+          <p>📍 Madrid y alrededores</p>
+          <p>📧 <a href="mailto:contacto@somoshispanidad.es" style="color:var(--sepia-dark)">contacto@somoshispanidad.es</a></p>
+          <p>🌐 28250 Torrelodones, Madrid</p>
+        </div>
+        <div style="margin-top:32px;padding:24px;background:var(--cream-dark);border-top:3px solid var(--gold)">
+          <p style="font-family:'Lato',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Visitas Culturales</p>
+          <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--ink-soft);line-height:1.7">Organizamos visitas guiadas a monumentos y lugares clave del patrimonio hispánico. Consulta el programa completo escribiéndonos.</p>
+          <a href="contacto.html" class="btn-outline" style="margin-top:20px;display:inline-block">Más información</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Somos <span>Hispanidad</span></div>
+        <p class="footer-desc">Ciudadanos comprometidos con rescatar la verdad histórica del imperio español y promover los lazos culturales entre España y el mundo hispano.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Navegación</p>
+        <ul class="footer-links">
+          <li><a href="../../index.html">Inicio</a></li>
+          <li><a href="asociacion.html">La Asociación</a></li>
+          <li><a href="eventos.html">Eventos</a></li>
+          <li><a href="contenidos.html">Contenidos</a></li>
+          <li><a href="autores.html">Autores</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Legal</p>
+        <ul class="footer-links">
+          <li><a href="privacidad.html">Política de Privacidad</a></li>
+          <li><a href="mailto:contacto@somoshispanidad.es">Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Somos Hispanidad · Todos los derechos reservados</p>
+      <a href="privacidad.html" class="footer-legal">Política de Privacidad</a>
+    </div>
+  </div>
+</footer>
+<a href="#" class="back-top" id="backTop" title="Volver al inicio">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</a>
+<script src="../js/main.js"></script>
+<script src="../js/supabaseClient.js"></script>
+<script src="../js/eventos.js"></script>
+</body>
+</html>

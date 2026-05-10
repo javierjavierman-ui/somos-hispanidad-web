@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Ciudadanos comprometidos con rescatar la verdad histórica del imperio español y promover los lazos culturales entre España y el mundo hispano.">
+<title>Somos Hispanidad — En lucha contra la Leyenda Negra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --cream: #f5efe6;
+    --cream-dark: #ecdec9;
+    --sepia-light: #d4b896;
+    --sepia: #b8926a;
+    --sepia-dark: #8b6343;
+    --sepia-deep: #5c3d1e;
+    --ink: #2c1a0e;
+    --ink-soft: #4a3020;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --warm-white: #faf6f0;
+    --shadow: rgba(44, 26, 14, 0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background-color: var(--warm-white);
+    color: var(--ink);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(245, 239, 230, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--sepia-light);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    transition: box-shadow 0.3s;
+  }
+
+  nav.scrolled { box-shadow: 0 4px 24px var(--shadow); }
+
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--sepia-deep);
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.25s, border-color 0.25s;
+  }
+
+  .nav-links a:hover {
+    color: var(--sepia-dark);
+    border-bottom-color: var(--gold);
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: var(--ink-soft);
+    transition: transform 0.3s;
+  }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 64px; left: 0; right: 0;
+    background: var(--cream);
+    border-bottom: 1px solid var(--sepia-light);
+    padding: 24px 40px;
+    z-index: 999;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .mobile-menu.open { display: flex; }
+
+  .mobile-menu a {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+
+  /* ── HERO ── */
+  #inicio {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: var(--sepia-deep);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/c4fe9a_2ac6058789b44eeebe7d20296b50f4dd~mv2.jpg/v1/fill/w_2500,h_1330,al_c/c4fe9a_2ac6058789b44eeebe7d20296b50f4dd~mv2.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    filter: sepia(40%) brightness(0.65);
+    transform: scale(1.03);
+    transition: transform 8s ease;
+  }
+
+  .hero-bg.loaded { transform: scale(1); }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(44, 26, 14, 0.3) 0%,
+      rgba(44, 26, 14, 0.55) 60%,
+      rgba(44, 26, 14, 0.8) 100%
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 24px;
+    animation: fadeUp 1.2s ease both;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 20px;
+    opacity: 0.9;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 600;
+    color: var(--warm-white);
+    line-height: 1.1;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+
+  .hero-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 20px auto;
+  }
+
+  .hero-divider::before,
+  .hero-divider::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.7;
+  }
+
+  .hero-divider-icon {
+    color: var(--gold);
+    font-size: 1.2rem;
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    font-style: italic;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+    max-width: 580px;
+    margin: 0 auto 36px;
+    line-height: 1.5;
+    opacity: 0.9;
+  }
+
+  .hero-tagline {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sepia-light);
+    margin-bottom: 40px;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sepia-deep);
+    background: var(--gold);
+    padding: 14px 36px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.25s, transform 0.2s;
+    margin: 0 8px;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: transparent;
+    padding: 13px 36px;
+    border: 1px solid var(--sepia-light);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.25s, border-color 0.25s, transform 0.2s;
+    margin: 0 8px;
+  }
+
+  .btn-outline:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--sepia-light);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    animation: bounce 2s infinite;
+  }
+
+  .hero-scroll svg { width: 16px; opacity: 0.7; }
+
+  /* ── SECTIONS COMMON ── */
+  section { position: relative; }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 100px 40px;
+  }
+
+  .section-label {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.6rem, 3vw, 2.6rem);
+    font-weight: 600;
+    color: var(--sepia-deep);
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .ornament {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .ornament-line {
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    flex: 1;
+    max-width: 120px;
+  }
+
+  .ornament-diamond {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .body-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: var(--ink-soft);
+    max-width: 680px;
+  }
+
+  /* ── QUIENES SOMOS ── */
+  #quienes-somos {
+    background: var(--cream);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-image-wrap {
+    position: relative;
+  }
+
+  .about-image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    filter: sepia(20%) contrast(1.05);
+    display: block;
+  }
+
+  .about-image-frame {
+    position: absolute;
+    top: -12px; left: -12px;
+    right: 12px; bottom: 12px;
+    border: 1px solid var(--gold);
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .about-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+
+  .badge {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border: 1px solid var(--sepia-light);
+    color: var(--sepia-dark);
+    background: transparent;
+    white-space: nowrap;
+  }
+
+  /* ── QUE OFRECEMOS ── */
+  #que-ofrecemos {
+    background: var(--warm-white);
+  }
+
+  .offers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .offer-card {
+    background: var(--cream);
+    padding: 48px 36px;
+    border-top: 3px solid transparent;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+  }
+
+  .offer-card:hover {
+    border-top-color: var(--gold);
+    transform: translateY(-4px);
+  }
+
+  .offer-number {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    color: var(--cream-dark);
+    line-height: 1;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  .offer-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--sepia-deep);
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+
+  .offer-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    line-height: 1.8;
+  }
+
+  /* ── BAROMETRO ── */
+  #barometro {
+    background: var(--sepia-deep);
+    color: var(--cream);
+    overflow: hidden;
+  }
+
+  #barometro .section-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  #barometro .section-title { color: var(--cream); }
+  #barometro .section-label { color: var(--gold-light); }
+  #barometro .ornament-line { background: linear-gradient(to right, var(--gold), transparent); }
+
+  .barometro-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: var(--cream-dark);
+  }
+
+  .barometro-image {
+    width: 100%;
+    object-fit: cover;
+    filter: sepia(30%) contrast(1.1) brightness(0.9);
+    display: block;
+  }
+
+  .barometro-cta {
+    margin-top: 36px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 4px;
+    transition: color 0.25s;
+  }
+
+  .barometro-cta:hover { color: var(--gold-light); }
+
+  /* ── CICLO INDIGENAS ── */
+  #ciclo {
+    background: var(--cream);
+  }
+
+  .ciclo-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 60px;
+  }
+
+  .ciclo-image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    filter: sepia(25%) contrast(1.05);
+    display: block;
+    position: sticky;
+    top: 90px;
+  }
+
+  /* ── MAPA VIRREINATOS ── */
+  #virreinatos {
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .virreinatos-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    align-items: center;
+    gap: 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 100px 40px;
+  }
+
+  #virreinatos .section-title { color: var(--cream); }
+  #virreinatos .section-label { color: var(--gold-light); }
+  #virreinatos .ornament-line { background: linear-gradient(to right, var(--gold), transparent); }
+
+  .virreinatos-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: var(--sepia-light);
+  }
+
+  .virreinatos-map {
+    width: 100%;
+    object-fit: contain;
+    filter: sepia(15%) contrast(1.1) brightness(0.95);
+    display: block;
+  }
+
+  /* ── CONTENIDOS ── */
+  #contenidos {
+    background: var(--warm-white);
+  }
+
+  .contenidos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 60px;
+  }
+
+  .post-card {
+    background: var(--cream);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px var(--shadow);
+  }
+
+  .post-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    filter: sepia(20%);
+    display: block;
+  }
+
+  .post-body {
+    padding: 28px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-meta {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .post-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--sepia-deep);
+    line-height: 1.4;
+    margin-bottom: 16px;
+    flex: 1;
+  }
+
+  .post-link {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sepia-dark);
+    text-decoration: none;
+    border-bottom: 1px solid var(--sepia-light);
+    padding-bottom: 2px;
+    align-self: flex-start;
+    transition: color 0.25s, border-color 0.25s;
+  }
+
+  .post-link:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  /* ── EVENTOS ── */
+  #eventos {
+    background: var(--cream-dark);
+  }
+
+  .eventos-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .evento-card {
+    background: var(--warm-white);
+    border-left: 3px solid var(--gold);
+    padding: 32px;
+    display: flex;
+    gap: 24px;
+    transition: transform 0.3s;
+  }
+
+  .evento-card:hover { transform: translateX(4px); }
+
+  .evento-date {
+    flex-shrink: 0;
+    text-align: center;
+    min-width: 64px;
+  }
+
+  .evento-day {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--sepia-dark);
+    line-height: 1;
+  }
+
+  .evento-month {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 4px;
+  }
+
+  .evento-info {}
+
+  .evento-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--sepia-deep);
+    margin-bottom: 8px;
+  }
+
+  .evento-loc {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+
+  .visitas-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--sepia-deep);
+    margin-bottom: 24px;
+    letter-spacing: 0.05em;
+  }
+
+  .visitas-image-wrap {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .visitas-image {
+    width: 100%;
+    display: block;
+    filter: sepia(25%) contrast(1.05);
+    transition: transform 0.5s, filter 0.5s;
+  }
+
+  .visitas-image-wrap:hover .visitas-image {
+    transform: scale(1.04);
+    filter: sepia(10%) contrast(1.1);
+  }
+
+  .visitas-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(44,26,14,0.7) 0%, transparent 60%);
+    display: flex;
+    align-items: flex-end;
+    padding: 24px;
+  }
+
+  .visitas-caption {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    color: var(--cream);
+    text-transform: uppercase;
+  }
+
+  /* ── ESCORIAL BANNER ── */
+  #escorial {
+    position: relative;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .escorial-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://static.wixstatic.com/media/c4fe9a_30ed886b63d648f28575e72c455e9191~mv2.jpg/v1/fill/w_2000,h_1000,al_c/c4fe9a_30ed886b63d648f28575e72c455e9191~mv2.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: sepia(30%) brightness(0.5);
+  }
+
+  .escorial-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(44,26,14,0.85) 0%,
+      rgba(44,26,14,0.4) 60%,
+      transparent 100%
+    );
+  }
+
+  .escorial-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
+
+  .escorial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+    font-style: italic;
+    color: var(--cream);
+    line-height: 1.5;
+    max-width: 560px;
+    margin-bottom: 24px;
+  }
+
+  .escorial-attr {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+  }
+
+  /* ── COMUNIDAD / CONTACTO ── */
+  #contacto {
+    background: var(--cream);
+  }
+
+  .contacto-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contacto-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .contacto-input {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    padding: 14px 18px;
+    background: var(--warm-white);
+    border: 1px solid var(--cream-dark);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.25s;
+    width: 100%;
+  }
+
+  .contacto-input:focus { border-color: var(--sepia); }
+
+  .contacto-input::placeholder { color: var(--sepia-light); }
+
+  textarea.contacto-input { resize: vertical; min-height: 120px; }
+
+  .contacto-sidebar h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--sepia-deep);
+    margin-bottom: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  .contacto-detail {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    line-height: 2;
+  }
+
+  .contacto-detail a {
+    color: var(--sepia-dark);
+    text-decoration: none;
+  }
+
+  .contacto-detail a:hover { color: var(--gold); }
+
+  .social-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 28px;
+  }
+
+  .social-icon {
+    width: 40px; height: 40px;
+    border: 1px solid var(--sepia-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sepia-dark);
+    text-decoration: none;
+    transition: background 0.25s, color 0.25s, border-color 0.25s;
+    font-size: 0.9rem;
+  }
+
+  .social-icon:hover {
+    background: var(--gold);
+    color: white;
+    border-color: var(--gold);
+  }
+
+  .paginas-amigas {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--cream-dark);
+  }
+
+  .paginas-amigas h4 {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sepia);
+    margin-bottom: 12px;
+  }
+
+  .paginas-amigas a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--sepia-dark);
+    text-decoration: none;
+  }
+
+  .paginas-amigas a:hover { color: var(--gold); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: var(--sepia-light);
+    padding: 60px 40px 32px;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(184,146,106,0.2);
+  }
+
+  .footer-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--cream);
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+
+  .footer-logo span { color: var(--gold); }
+
+  .footer-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--sepia-light);
+    max-width: 340px;
+  }
+
+  .footer-col-title {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-links a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--sepia-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--gold-light); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 28px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-copy {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--sepia-dark);
+  }
+
+  .footer-legal {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.65rem;
+    color: var(--sepia-dark);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+
+  .footer-legal:hover { color: var(--sepia-light); }
+
+  /* ── BACK TO TOP ── */
+  .back-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 44px;
+    height: 44px;
+    background: var(--gold);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    z-index: 500;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s, transform 0.3s;
+    text-decoration: none;
+  }
+
+  .back-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .back-top:hover { background: var(--gold-light); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(6px); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    .about-grid,
+    .ciclo-layout,
+    .eventos-layout,
+    .contacto-grid,
+    #barometro .section-inner,
+    .virreinatos-inner,
+    .footer-top {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .offers-grid,
+    .contenidos-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .section-inner { padding: 60px 24px; }
+
+    .about-image-frame { display: none; }
+
+    .ciclo-image { position: static; }
+
+    .footer-top { grid-template-columns: 1fr; gap: 36px; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-title { font-size: 2.4rem; }
+    .btn-primary, .btn-outline { display: block; text-align: center; margin: 8px 0; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ── NAV ── -->
+<nav id="navbar">
+  <a href="#inicio" class="nav-logo">Somos <span>Hispanidad</span></a>
+  <ul class="nav-links">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#quienes-somos">Quiénes Somos</a></li>
+    <li><a href="#que-ofrecemos">Nuestro Objetivo</a></li>
+    <li><a href="#barometro">Barómetro</a></li>
+    <li><a href="#ciclo">Ciclo Indígenas</a></li>
+    <li><a href="#contenidos">Contenidos</a></li>
+    <li><a href="#eventos">Eventos</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#inicio" onclick="closeMobile()">Inicio</a>
+  <a href="#quienes-somos" onclick="closeMobile()">Quiénes Somos</a>
+  <a href="#que-ofrecemos" onclick="closeMobile()">Nuestro Objetivo</a>
+  <a href="#barometro" onclick="closeMobile()">Barómetro</a>
+  <a href="#ciclo" onclick="closeMobile()">Ciclo Indígenas</a>
+  <a href="#contenidos" onclick="closeMobile()">Contenidos</a>
+  <a href="#eventos" onclick="closeMobile()">Eventos</a>
+  <a href="#contacto" onclick="closeMobile()">Contacto</a>
+</div>
+
+<!-- ── HERO ── -->
+<section id="inicio">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Conexión · Solidaridad · Crecimiento</p>
+    <h1 class="hero-title">Somos<br>Hispanidad</h1>
+    <div class="hero-divider">
+      <span class="hero-divider-icon">✦</span>
+    </div>
+    <p class="hero-subtitle">Es tiempo de desarticular la Leyenda Negra.<br>Orgullosos de nuestra historia.</p>
+    <p class="hero-tagline">España · Hispanoamérica · Cultura · Lengua · Identidad</p>
+    <div>
+      <a href="#quienes-somos" class="btn-primary">Conoce nuestra misión</a>
+      <a href="#contenidos" class="btn-outline">Ver contenidos</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    Descubrir
+  </div>
+</section>
+
+<!-- ── QUIENES SOMOS ── -->
+<section id="quienes-somos">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="reveal">
+        <span class="section-label">Quiénes Somos</span>
+        <h2 class="section-title">Bienvenidos a nuestra Comunidad Hispana</h2>
+        <div class="ornament">
+          <div class="ornament-diamond"></div>
+          <div class="ornament-line"></div>
+        </div>
+        <p class="body-text">
+          Somos ciudadanos que buscamos establecer lazos entre españoles e hispanos, más allá de lo puramente lingüístico.
+        </p>
+        <br>
+        <p class="body-text">
+          Nos dedicamos a explorar y reivindicar la verdad histórica y resaltar los vínculos comunes de la cultura hispánica: derecho, religión, tradiciones, estilo de vida y, por supuesto, la lengua.
+        </p>
+        <div class="about-badges">
+          <span class="badge">Verdad Histórica</span>
+          <span class="badge">Cultura Hispánica</span>
+          <span class="badge">Mestizaje</span>
+          <span class="badge">Lengua</span>
+          <span class="badge">Iberoamérica</span>
+        </div>
+      </div>
+      <div class="about-image-wrap reveal" style="transition-delay: 0.2s;">
+        <img
+          src="https://static.wixstatic.com/media/c4fe9a_2ac6058789b44eeebe7d20296b50f4dd~mv2.jpg/v1/fill/w_1000,h_700,al_c/c4fe9a_2ac6058789b44eeebe7d20296b50f4dd~mv2.jpg"
+          alt="Jóvenes hispanidad en plaza de México"
+          class="about-image"
+          loading="lazy"
+        >
+        <div class="about-image-frame"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── QUE OFRECEMOS ── -->
+<section id="que-ofrecemos">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-label">Qué Ofrecemos</span>
+      <h2 class="section-title">Misión, Compromiso<br>y Método</h2>
+      <div class="ornament">
+        <div class="ornament-diamond"></div>
+        <div class="ornament-line"></div>
+      </div>
+    </div>
+    <div class="offers-grid">
+      <div class="offer-card reveal">
+        <div class="offer-number">01</div>
+        <h3 class="offer-title">Nuestro Objetivo</h3>
+        <p class="offer-text">Conocer la verdad de la experiencia del imperio español, resaltar sus valores y rescatar su impronta en la actualidad.</p>
+      </div>
+      <div class="offer-card reveal" style="transition-delay: 0.15s;">
+        <div class="offer-number">02</div>
+        <h3 class="offer-title">Nuestro Compromiso</h3>
+        <p class="offer-text">Trabajar en la difusión de la herencia cultural y tradiciones de todos los países hispanos, reforzando nuestra identidad compartida.</p>
+      </div>
+      <div class="offer-card reveal" style="transition-delay: 0.3s;">
+        <div class="offer-number">03</div>
+        <h3 class="offer-title">Nuestro Método</h3>
+        <p class="offer-text">Promover el intercambio de ideas, opiniones e investigación entre los participantes de nuestra comunidad.</p>
+      </div>
+    </div>
+    <div style="margin-top: 48px;" class="reveal">
+      <a href="https://www.somoshispanidad.es/_files/ugd/c4fe9a_89a4b4838f944d48979c9f8ae7d987ea.pdf" class="btn-primary" target="_blank">Último Orden del Día</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── BAROMETRO ── -->
+<section id="barometro">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-label">Proyecto Destacado</span>
+      <h2 class="section-title">Barómetro<br>sobre la Hispanidad</h2>
+      <div class="ornament">
+        <div class="ornament-diamond" style="background: var(--gold);"></div>
+        <div class="ornament-line"></div>
+      </div>
+      <p class="barometro-text">
+        Un proyecto de investigación y análisis destinado a medir y comprender la percepción de la hispanidad, sus valores y su legado histórico entre las comunidades hispanohablantes del mundo.
+      </p>
+      <a href="https://www.somoshispanidad.es" class="barometro-cta" target="_blank">
+        Saber más →
+      </a>
+    </div>
+    <div class="reveal" style="transition-delay: 0.2s;">
+      <img
+        src="https://static.wixstatic.com/media/c4fe9a_0536debe364e46ba9ad0e91821ff5a89~mv2.jpg/v1/fill/w_800,h_500,al_c/c4fe9a_0536debe364e46ba9ad0e91821ff5a89~mv2.jpg"
+        alt="Barómetro sobre la Hispanidad"
+        class="barometro-image"
+        loading="lazy"
+      >
+    </div>
+  </div>
+</section>
+
+<!-- ── CICLO INDIGENAS ── -->
+<section id="ciclo">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-label">Ciclo de Conferencias</span>
+      <h2 class="section-title">El Papel de los Indígenas<br>en la Conquista</h2>
+      <div class="ornament">
+        <div class="ornament-diamond"></div>
+        <div class="ornament-line"></div>
+      </div>
+    </div>
+    <div class="ciclo-layout">
+      <div class="reveal">
+        <p class="body-text" style="margin-bottom: 28px;">
+          Frente a la narrativa reduccionista de la "Leyenda Negra" que presenta a los pueblos originarios como meras víctimas pasivas, este ciclo de eventos se propone analizar la historia con rigor y valentía.
+        </p>
+        <p class="body-text" style="margin-bottom: 28px;">
+          La Hispanidad no fue una imposición unilateral, sino un proceso complejo de alianzas, mestizaje y participación activa.
+        </p>
+        <p class="body-text" style="margin-bottom: 36px;">
+          Exploraremos cómo los indígenas no solo fueron actores clave en la conquista, sino colaboradores fundamentales de una nueva civilización. Desde las coaliciones guerreras que derribaron imperios opresores hasta la integración cultural y administrativa.
+        </p>
+        <div style="background: var(--cream-dark); padding: 28px; border-left: 3px solid var(--gold);">
+          <p style="font-family: 'Lato', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px;">Próxima Charla</p>
+          <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--sepia-deep); margin-bottom: 8px;">El papel de los indígenas en la conquista de América: Mesoamérica</p>
+          <p style="font-family: 'Lato', sans-serif; font-size: 0.8rem; color: var(--ink-soft);">D. José J. Laorden</p>
+          <a href="https://youtu.be/afx1w-wiLCg" target="_blank" class="btn-primary" style="display: inline-block; margin-top: 20px; font-size: 0.7rem; padding: 10px 24px;">Ver Conferencia</a>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay: 0.2s;">
+        <img
+          src="https://static.wixstatic.com/media/c4fe9a_9f62f1aa643f43558ce5bbe8cf7ef970~mv2.jpg/v1/fill/w_700,h_450,al_c/c4fe9a_9f62f1aa643f43558ce5bbe8cf7ef970~mv2.jpg"
+          alt="Ciclo sobre indígenas en la conquista"
+          class="ciclo-image"
+          loading="lazy"
+        >
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VIRREINATOS ── -->
+<section id="virreinatos">
+  <div class="virreinatos-inner">
+    <div class="reveal">
+      <span class="section-label">Legado Imperial</span>
+      <h2 class="section-title">Los Virreinatos Españoles</h2>
+      <div class="ornament">
+        <div class="ornament-diamond" style="background: var(--gold);"></div>
+        <div class="ornament-line"></div>
+      </div>
+      <p class="virreinatos-text">
+        El imperio español articuló un vastísimo territorio mediante un sistema de virreinatos que vertebró política, cultural y jurídicamente un continente entero. Este legado administrativo y civilizatorio es parte fundamental de la identidad hispana que reivindicamos.
+      </p>
+    </div>
+    <div class="reveal" style="transition-delay: 0.2s;">
+      <img
+        src="https://static.wixstatic.com/media/c4fe9a_80bf5275771f4012846cf3d604bd43f6~mv2.png/v1/fill/w_900,h_600,al_c/c4fe9a_80bf5275771f4012846cf3d604bd43f6~mv2.png"
+        alt="Mapa de los Virreinatos Españoles"
+        class="virreinatos-map"
+        loading="lazy"
+      >
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTENIDOS ── -->
+<section id="contenidos">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-label">Nuestros Contenidos</span>
+      <h2 class="section-title">Artículos y Conferencias</h2>
+      <div class="ornament">
+        <div class="ornament-diamond"></div>
+        <div class="ornament-line"></div>
+      </div>
+    </div>
+    <div class="contenidos-grid">
+      <article class="post-card reveal">
+        <img
+          src="https://i.ytimg.com/vi/EZ2i15y-P3Y/maxresdefault.jpg"
+          alt="Justicia Real en la América Española"
+          class="post-thumb"
+          loading="lazy"
+        >
+        <div class="post-body">
+          <p class="post-meta">21 Abr 2026 · Conferencia</p>
+          <h3 class="post-title">Presentación del libro "Justicia Real en la América Española", por don César Pérez Guevara</h3>
+          <a href="https://youtu.be/EZ2i15y-P3Y" target="_blank" class="post-link">Ver contenido →</a>
+        </div>
+      </article>
+      <article class="post-card reveal" style="transition-delay: 0.15s;">
+        <img
+          src="https://i.ytimg.com/vi/afx1w-wiLCg/hqdefault.jpg"
+          alt="Indígenas en la conquista de América"
+          class="post-thumb"
+          loading="lazy"
+        >
+        <div class="post-body">
+          <p class="post-meta">8 Abr 2026 · Charla Temática</p>
+          <h3 class="post-title">El papel de los indígenas en la conquista de América: Mesoamérica</h3>
+          <a href="https://youtu.be/afx1w-wiLCg" target="_blank" class="post-link">Ver contenido →</a>
+        </div>
+      </article>
+      <article class="post-card reveal" style="transition-delay: 0.3s;">
+        <div class="post-thumb" style="background: var(--cream-dark); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:'Cinzel',serif; color:var(--sepia); font-size:0.8rem; letter-spacing:0.1em;">TERROR BOLIVARIANO</span>
+        </div>
+        <div class="post-body">
+          <p class="post-meta">18 Mar 2026 · Artículo · Francisco Massó</p>
+          <h3 class="post-title">Terror Bolivariano — Análisis del revisionismo histórico contemporáneo</h3>
+          <a href="https://www.somoshispanidad.es/post/terror-bolivariano" target="_blank" class="post-link">Leer artículo →</a>
+        </div>
+      </article>
+    </div>
+    <div style="text-align: center; margin-top: 56px;" class="reveal">
+      <a href="https://www.somoshispanidad.es" class="btn-primary" target="_blank">Ver todos los contenidos</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── ESCORIAL BANNER ── -->
+<section id="escorial">
+  <div class="escorial-bg"></div>
+  <div class="escorial-overlay"></div>
+  <div class="escorial-content reveal">
+    <p class="escorial-quote">
+      "El Monasterio de El Escorial: símbolo eterno del esplendor y la grandeza de la civilización hispánica."
+    </p>
+    <p class="escorial-attr">Real Monasterio de San Lorenzo de El Escorial · Madrid, España</p>
+    <a href="#eventos" style="display:inline-block; margin-top: 28px;" class="btn-outline">Ver próxima visita</a>
+  </div>
+</section>
+
+<!-- ── EVENTOS ── -->
+<section id="eventos">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-label">Agenda</span>
+      <h2 class="section-title">Próximos Acontecimientos</h2>
+      <div class="ornament">
+        <div class="ornament-diamond"></div>
+        <div class="ornament-line"></div>
+      </div>
+    </div>
+    <div class="eventos-layout" style="margin-top: 60px;">
+      <div>
+        <div class="evento-card reveal">
+          <div class="evento-date">
+            <div class="evento-day">20</div>
+            <div class="evento-month">Jun · 2026</div>
+          </div>
+          <div class="evento-info">
+            <h3 class="evento-title">Visita guiada al Monasterio del Escorial con comida de hermandad</h3>
+            <p class="evento-loc">📍 Real Monasterio de San Lorenzo de El Escorial</p>
+            <a href="https://www.somoshispanidad.es/detalles-y-registro/visita-guiada-al-monasterio-del-escorial-con-comida-de-hermandad" target="_blank" class="btn-primary" style="font-size: 0.7rem; padding: 10px 22px;">Reservar plaza</a>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay: 0.2s;">
+        <h3 class="visitas-title">Visitas Culturales</h3>
+        <div class="visitas-image-wrap">
+          <a href="https://www.somoshispanidad.es/_files/ugd/c4fe9a_89e91acaeff04b62a88d2537e14cd1ce.pdf" target="_blank">
+            <img
+              src="https://static.wixstatic.com/media/c4fe9a_e09e9d7e05014a1b8cb340776c2d8473~mv2.jpg/v1/fill/w_600,h_500,al_c/c4fe9a_e09e9d7e05014a1b8cb340776c2d8473~mv2.jpg"
+              alt="Visitas culturales - Somos Hispanidad"
+              class="visitas-image"
+              loading="lazy"
+            >
+            <div class="visitas-overlay">
+              <span class="visitas-caption">Pincha para ver el programa →</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACTO ── -->
+<section id="contacto">
+  <div class="section-inner">
+    <div class="contacto-grid">
+      <div>
+        <div class="reveal">
+          <span class="section-label">Conecta con Nosotros</span>
+          <h2 class="section-title">Contacta y Mantente Informado</h2>
+          <div class="ornament">
+            <div class="ornament-diamond"></div>
+            <div class="ornament-line"></div>
+          </div>
+          <p class="body-text">¿Quieres unirte a nuestra comunidad, proponer contenidos o simplemente saber más? Escríbenos y te responderemos a la mayor brevedad.</p>
+        </div>
+        <div class="contacto-form-group reveal">
+          <input class="contacto-input" type="text" placeholder="Tu nombre" aria-label="Nombre">
+          <input class="contacto-input" type="email" placeholder="Tu correo electrónico" aria-label="Email">
+          <input class="contacto-input" type="text" placeholder="Asunto" aria-label="Asunto">
+          <textarea class="contacto-input" placeholder="Tu mensaje..." aria-label="Mensaje"></textarea>
+          <button class="btn-primary" style="align-self: flex-start; cursor: pointer; border: none; font-size: 0.75rem;">Enviar Mensaje</button>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay: 0.2s;">
+        <div class="contacto-sidebar">
+          <h3>Somos Hispanidad</h3>
+          <div class="contacto-detail">
+            <p>28250 Torrelodones<br>Madrid, España</p>
+            <br>
+            <p><a href="mailto:contacto@somoshispanidad.es">contacto@somoshispanidad.es</a></p>
+          </div>
+          <div class="social-row">
+            <a href="https://www.facebook.com" class="social-icon" title="Facebook" target="_blank">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="https://www.twitter.com" class="social-icon" title="X / Twitter" target="_blank">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com" class="social-icon" title="LinkedIn" target="_blank">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="https://www.instagram.com" class="social-icon" title="Instagram" target="_blank">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+          </div>
+          <div class="paginas-amigas">
+            <h4>Páginas Amigas</h4>
+            <a href="https://protocolodesantapola.es/" target="_blank">Protocolo de Santa Pola →</a>
+          </div>
+          <div style="margin-top: 40px; padding: 28px; background: var(--cream-dark); border-top: 3px solid var(--gold);">
+            <p style="font-family: 'Lato', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px;">Muy Pronto</p>
+            <p style="font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--ink-soft); line-height: 1.7;">Nueva plataforma de conexión para la comunidad hispana. Mantente atento a nuestras novedades.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Somos <span>Hispanidad</span></div>
+        <p class="footer-desc">Ciudadanos comprometidos con rescatar la verdad histórica del imperio español y promover los lazos culturales entre España y el mundo hispano a través de la investigación y la difusión.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Navegación</p>
+        <ul class="footer-links">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#quienes-somos">Quiénes Somos</a></li>
+          <li><a href="#que-ofrecemos">Nuestro Objetivo</a></li>
+          <li><a href="#barometro">Barómetro</a></li>
+          <li><a href="#ciclo">Ciclo Indígenas</a></li>
+          <li><a href="#contenidos">Contenidos</a></li>
+          <li><a href="#eventos">Eventos</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Recursos</p>
+        <ul class="footer-links">
+          <li><a href="https://www.somoshispanidad.es/_files/ugd/c4fe9a_89a4b4838f944d48979c9f8ae7d987ea.pdf" target="_blank">Último Orden del Día</a></li>
+          <li><a href="https://www.somoshispanidad.es/_files/ugd/c4fe9a_89e91acaeff04b62a88d2537e14cd1ce.pdf" target="_blank">Programa de Visitas</a></li>
+          <li><a href="https://protocolodesantapola.es/" target="_blank">Páginas Amigas</a></li>
+          <li><a href="mailto:contacto@somoshispanidad.es">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Somos Hispanidad · Todos los derechos reservados</p>
+      <a
+        href="https://www.somoshispanidad.es/_files/ugd/c4fe9a_d60b3c057b984740bd2023525d8cef3b.docx"
+        class="footer-legal"
+        target="_blank"
+      >Aviso Legal</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ── BACK TO TOP ── -->
+<a href="#inicio" class="back-top" id="backTop" title="Volver al inicio">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</a>
+
+<script>
+  // Nav scroll effect
+  const navbar = document.getElementById('navbar');
+  const backTop = document.getElementById('backTop');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    navbar.classList.toggle('scrolled', y > 40);
+    backTop.classList.toggle('visible', y > 400);
+  });
+
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile() { mobileMenu.classList.remove('open'); }
+
+  // Hero image parallax init
+  const heroBg = document.getElementById('heroBg');
+  setTimeout(() => heroBg.classList.add('loaded'), 100);
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Active nav link highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current
+        ? 'var(--sepia-dark)' : '';
+    });
+  });
+</script>
+</body>
+</html>

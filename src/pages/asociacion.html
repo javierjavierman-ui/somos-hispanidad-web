@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Conoce la misión, valores e historia de Somos Hispanidad, asociación cultural dedicada a la divulgación del legado hispánico.">
+<title>La Asociación — Somos Hispanidad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<nav id="navbar">
+  <a href="../../index.html" class="nav-logo">Somos <span>Hispanidad</span></a>
+  <ul class="nav-links">
+    <li><a href="../../index.html">Inicio</a></li>
+    <li><a href="asociacion.html" class="active">La Asociación</a></li>
+    <li><a href="eventos.html">Eventos</a></li>
+    <li><a href="contenidos.html">Contenidos</a></li>
+    <li><a href="autores.html">Autores</a></li>
+    <li><a href="contacto.html">Contacto</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="../../index.html" onclick="closeMobile()">Inicio</a>
+  <a href="asociacion.html" onclick="closeMobile()">La Asociación</a>
+  <a href="eventos.html" onclick="closeMobile()">Eventos</a>
+  <a href="contenidos.html" onclick="closeMobile()">Contenidos</a>
+  <a href="autores.html" onclick="closeMobile()">Autores</a>
+  <a href="contacto.html" onclick="closeMobile()">Contacto</a>
+</div>
+
+<div class="page-header">
+  <p class="page-header-label">Quiénes Somos</p>
+  <h1>La Asociación</h1>
+  <div class="page-header-divider"><span style="color:var(--gold)">✦</span></div>
+</div>
+
+<!-- MISIÓN -->
+<section style="background:var(--cream)">
+  <div class="section-inner">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center" class="reveal">
+      <div>
+        <span class="section-label">Nuestra Misión</span>
+        <h2 class="section-title">Bienvenidos a nuestra Comunidad Hispana</h2>
+        <div class="ornament"><div class="ornament-diamond"></div><div class="ornament-line"></div></div>
+        <p class="body-text">Somos ciudadanos que buscamos establecer lazos entre españoles e hispanos, más allá de lo puramente lingüístico.</p>
+        <br>
+        <p class="body-text">Nos dedicamos a explorar y reivindicar la verdad histórica y resaltar los vínculos comunes de la cultura hispánica: derecho, religión, tradiciones, estilo de vida y, por supuesto, la lengua.</p>
+        <br>
+        <p class="body-text">Frente a la narrativa de la Leyenda Negra que tergiversa el legado español, ofrecemos rigor, documentación y debate abierto.</p>
+        <div class="about-badges" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:32px">
+          <span class="badge">Verdad Histórica</span>
+          <span class="badge">Cultura Hispánica</span>
+          <span class="badge">Mestizaje</span>
+          <span class="badge">Lengua</span>
+          <span class="badge">Iberoamérica</span>
+        </div>
+      </div>
+      <div style="position:relative">
+        <img src="https://static.wixstatic.com/media/c4fe9a_2ac6058789b44eeebe7d20296b50f4dd~mv2.jpg/v1/fill/w_1000,h_700,al_c/c4fe9a_2ac6058789b44eeebe7d20296b50f4dd~mv2.jpg"
+          alt="Comunidad hispana" style="width:100%;object-fit:cover;filter:sepia(20%) contrast(1.05)" loading="lazy">
+        <div style="position:absolute;top:-12px;left:-12px;right:12px;bottom:12px;border:1px solid var(--gold);opacity:0.5;pointer-events:none"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORES -->
+<section style="background:var(--warm-white)">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-label">Nuestros Valores</span>
+      <h2 class="section-title">Los Pilares que nos Guían</h2>
+      <div class="ornament"><div class="ornament-diamond"></div><div class="ornament-line"></div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:48px">
+      <div class="offer-card reveal" style="background:var(--cream);padding:48px 36px;border-top:3px solid transparent;transition:border-color 0.3s,transform 0.3s">
+        <div style="font-family:'Cinzel',serif;font-size:3rem;color:var(--cream-dark);line-height:1;margin-bottom:20px;font-weight:600">01</div>
+        <h3 style="font-family:'Cinzel',serif;font-size:1rem;color:var(--sepia-deep);margin-bottom:16px;letter-spacing:0.05em">Verdad Histórica</h3>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--ink-soft);line-height:1.8">Conocer la verdad de la experiencia del imperio español, resaltar sus valores y rescatar su impronta en la actualidad, combatiendo la desinformación con rigor documental.</p>
+      </div>
+      <div class="offer-card reveal" style="background:var(--cream);padding:48px 36px;border-top:3px solid transparent;transition:border-color 0.3s,transform 0.3s;transition-delay:0.1s">
+        <div style="font-family:'Cinzel',serif;font-size:3rem;color:var(--cream-dark);line-height:1;margin-bottom:20px;font-weight:600">02</div>
+        <h3 style="font-family:'Cinzel',serif;font-size:1rem;color:var(--sepia-deep);margin-bottom:16px;letter-spacing:0.05em">Identidad Hispánica</h3>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--ink-soft);line-height:1.8">Trabajar en la difusión de la herencia cultural y tradiciones de todos los países hispanos, reforzando nuestra identidad compartida a ambos lados del Atlántico.</p>
+      </div>
+      <div class="offer-card reveal" style="background:var(--cream);padding:48px 36px;border-top:3px solid transparent;transition:border-color 0.3s,transform 0.3s;transition-delay:0.2s">
+        <div style="font-family:'Cinzel',serif;font-size:3rem;color:var(--cream-dark);line-height:1;margin-bottom:20px;font-weight:600">03</div>
+        <h3 style="font-family:'Cinzel',serif;font-size:1rem;color:var(--sepia-deep);margin-bottom:16px;letter-spacing:0.05em">Mestizaje y Diálogo</h3>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--ink-soft);line-height:1.8">Reconocer la riqueza del encuentro entre culturas y promover el diálogo abierto, plural y respetuoso entre todos los pueblos que conforman la familia hispánica.</p>
+      </div>
+      <div class="offer-card reveal" style="background:var(--cream);padding:48px 36px;border-top:3px solid transparent;transition:border-color 0.3s,transform 0.3s;transition-delay:0.3s">
+        <div style="font-family:'Cinzel',serif;font-size:3rem;color:var(--cream-dark);line-height:1;margin-bottom:20px;font-weight:600">04</div>
+        <h3 style="font-family:'Cinzel',serif;font-size:1rem;color:var(--sepia-deep);margin-bottom:16px;letter-spacing:0.05em">Rigor e Investigación</h3>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--ink-soft);line-height:1.8">Promover el intercambio de ideas, opiniones e investigación entre los participantes de nuestra comunidad, con fuentes documentadas y debate académico serio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORIA -->
+<section style="background:var(--sepia-deep)">
+  <div class="section-inner">
+    <div style="max-width:720px;margin:0 auto;text-align:center" class="reveal">
+      <span class="section-label" style="color:var(--gold-light)">Nuestra Historia</span>
+      <h2 class="section-title" style="color:var(--cream)">De la Inquietud al Compromiso</h2>
+      <div class="ornament" style="justify-content:center"><div class="ornament-diamond" style="background:var(--gold)"></div><div class="ornament-line"></div></div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;line-height:1.85;color:var(--cream-dark);margin-bottom:24px">Somos Hispanidad nació de la inquietud de un grupo de ciudadanos comprometidos que observaban cómo la narrativa de la Leyenda Negra ganaba terreno en los medios y en la educación, distorsionando el legado histórico de España en América.</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;line-height:1.85;color:var(--cream-dark);margin-bottom:24px">Con sede en Torrelodones (Madrid), la asociación reúne a historiadores, investigadores, escritores y ciudadanos apasionados por la historia y la cultura hispánica, convencidos de que la verdad histórica es un bien que merece defensa y divulgación.</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;line-height:1.85;color:var(--cream-dark)">Desde sus inicios, hemos organizado conferencias, ciclos temáticos, visitas culturales y publicado artículos de análisis histórico y político que han llegado a miles de lectores hispanohablantes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO UNIRSE -->
+<section style="background:var(--cream)">
+  <div class="section-inner" style="text-align:center">
+    <div class="reveal">
+      <span class="section-label">Únete</span>
+      <h2 class="section-title">Forma Parte de la Comunidad</h2>
+      <div class="ornament" style="justify-content:center"><div class="ornament-diamond"></div><div class="ornament-line"></div></div>
+      <p class="body-text" style="margin:0 auto 40px">Si compartes nuestra pasión por la historia y la cultura hispánica y quieres contribuir a su difusión, escríbenos. Estamos siempre abiertos a nuevos socios, colaboradores y ponentes.</p>
+      <a href="contacto.html" class="btn-primary">Contactar con nosotros</a>
+      <a href="eventos.html" class="btn-outline">Ver próximos eventos</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Somos <span>Hispanidad</span></div>
+        <p class="footer-desc">Ciudadanos comprometidos con rescatar la verdad histórica del imperio español y promover los lazos culturales entre España y el mundo hispano.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Navegación</p>
+        <ul class="footer-links">
+          <li><a href="../../index.html">Inicio</a></li>
+          <li><a href="asociacion.html">La Asociación</a></li>
+          <li><a href="eventos.html">Eventos</a></li>
+          <li><a href="contenidos.html">Contenidos</a></li>
+          <li><a href="autores.html">Autores</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Legal</p>
+        <ul class="footer-links">
+          <li><a href="privacidad.html">Política de Privacidad</a></li>
+          <li><a href="mailto:contacto@somoshispanidad.es">Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Somos Hispanidad · Todos los derechos reservados</p>
+      <a href="privacidad.html" class="footer-legal">Política de Privacidad</a>
+    </div>
+  </div>
+</footer>
+<a href="#" class="back-top" id="backTop" title="Volver al inicio">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</a>
+<script src="../js/main.js"></script>
+</body>
+</html>

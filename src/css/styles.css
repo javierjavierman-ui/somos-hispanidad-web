@@ -941,6 +941,13 @@ footer {
   display: block;
 }
 
+.about-logo {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: contain;
+  display: block;
+}
+
 .about-image-frame {
   position: absolute;
   top: -12px; left: -12px;

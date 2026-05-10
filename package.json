@@ -4,6 +4,8 @@
   "description": "Web oficial de la Asociación Cultural Somos Hispanidad — HTML, CSS, JavaScript",
   "private": true,
   "scripts": {
+    "install": "echo 'No install step required'",
+    "build": "echo 'No build step required for static site'",
     "dev": "npx live-server --port=3000 --open=index.html"
   },
   "keywords": ["hispanidad", "cultura", "historia", "españa", "iberoamerica"],

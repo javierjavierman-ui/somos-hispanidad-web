@@ -75,12 +75,12 @@ const EVENTOS_SIMULADOS = [
  * @param {string} contenedorId - El id del elemento HTML donde se insertarán
  * @param {number} limite - Cuántos eventos mostrar (0 = todos)
  */
-function renderizarEventos(contenedorId, limite = 0) {
+async function renderizarEventos(contenedorId, limite = 0) {
   const contenedor = document.getElementById(contenedorId);
   if (!contenedor) return;
 
-  // En el futuro: const eventos = await getEventos();
-  const eventos = EVENTOS_SIMULADOS;
+  // Cargar eventos desde Supabase (con fallback a simulados)
+  const eventos = await getEventos();
   const lista = limite > 0 ? eventos.slice(0, limite) : eventos;
 
   if (lista.length === 0) {
@@ -106,7 +106,6 @@ function renderizarEventos(contenedorId, limite = 0) {
     </div>
   `).join('');
 
-  // Activar animación reveal en los elementos recién creados
   activarReveal();
 }
 
@@ -116,14 +115,15 @@ function renderizarEventos(contenedorId, limite = 0) {
  * Gestiona el formulario de inscripción a un evento.
  * De momento muestra un mensaje; en el futuro enviará datos a Supabase.
  */
-function initFormularioInscripcion() {
+async function initFormularioInscripcion() {
   const form = document.getElementById('form-inscripcion');
   if (!form) return;
 
-  // Rellenar el selector de eventos disponibles
+  // Rellenar el selector con eventos desde Supabase
   const selectEvento = document.getElementById('select-evento');
   if (selectEvento) {
-    EVENTOS_SIMULADOS.forEach(ev => {
+    const eventos = await getEventos();
+    eventos.forEach(ev => {
       const option = document.createElement('option');
       option.value = ev.id;
       option.textContent = `${ev.dia} ${ev.mes} · ${ev.titulo}`;
@@ -131,39 +131,42 @@ function initFormularioInscripcion() {
     });
   }
 
-  form.addEventListener('submit', function(e) {
+  form.addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const nombre = document.getElementById('insc-nombre')?.value;
-    const email = document.getElementById('insc-email')?.value;
+    const nombre = document.getElementById('insc-nombre')?.value.trim();
+    const email = document.getElementById('insc-email')?.value.trim();
     const evento = document.getElementById('select-evento')?.value;
+    const phone = document.getElementById('insc-telefono')?.value?.trim() || null;
+    const comments = document.getElementById('insc-comentarios')?.value?.trim() || null;
 
     if (!nombre || !email || !evento) {
       alert('Por favor, rellena todos los campos obligatorios.');
       return;
     }
 
-    // ── AQUÍ irá en el futuro: registrarSimpatizante(nombre, email, evento);
+    // Guardar inscripción en Supabase
+    const ok = await registrarInscripcion(evento, nombre, email, phone, comments);
 
     const exito = document.getElementById('inscripcion-exito');
-    if (exito) {
+    if (ok && exito) {
       exito.style.display = 'block';
       form.style.display = 'none';
+    } else if (!ok) {
+      alert('Error al registrar la inscripción. Inténtalo de nuevo.');
     }
   });
 }
 
 
 // ── INICIALIZAR AL CARGAR LA PÁGINA ──────────────────────
-document.addEventListener('DOMContentLoaded', function() {
-  // Renderizar en la página de eventos completa
+document.addEventListener('DOMContentLoaded', async function() {
   if (document.getElementById('lista-eventos')) {
-    renderizarEventos('lista-eventos');
-    initFormularioInscripcion();
+    await renderizarEventos('lista-eventos');
+    await initFormularioInscripcion();
   }
 
-  // Renderizar solo 2 en la página de inicio (preview)
   if (document.getElementById('eventos-preview')) {
-    renderizarEventos('eventos-preview', 2);
+    await renderizarEventos('eventos-preview', 2);
   }
 });

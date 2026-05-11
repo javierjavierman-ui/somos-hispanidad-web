@@ -125,11 +125,11 @@ const AUTORES_SIMULADOS = [
  * @param {number} limite - Cuántos mostrar (0 = todos)
  * @param {string} filtroTipo - Filtrar por tipo ("Artículo", "Vídeo", etc.) o vacío para todos
  */
-function renderizarContenidos(contenedorId, limite = 0, filtroTipo = '') {
+async function renderizarContenidos(contenedorId, limite = 0, filtroTipo = '') {
   const contenedor = document.getElementById(contenedorId);
   if (!contenedor) return;
 
-  let lista = CONTENIDOS_SIMULADOS;
+  let lista = await getContenidos();
 
   if (filtroTipo) {
     lista = lista.filter(c => c.tipo === filtroTipo);
@@ -166,14 +166,19 @@ function renderizarContenidos(contenedorId, limite = 0, filtroTipo = '') {
 
 
 // ── FUNCIÓN: RENDERIZAR AUTORES ───────────────────────────
-function renderizarAutores(contenedorId) {
+async function renderizarAutores(contenedorId) {
   const contenedor = document.getElementById(contenedorId);
   if (!contenedor) return;
 
-  contenedor.innerHTML = AUTORES_SIMULADOS.map(a => `
+  const autores = await getAutores();
+
+  contenedor.innerHTML = autores.map(a => `
     <div class="post-card reveal">
       <div class="post-thumb-placeholder" style="aspect-ratio:1/1;">
-        <span style="font-size:2rem;">👤</span>
+        ${a.imagen
+          ? `<img src="${a.imagen}" alt="${a.nombre}" style="width:100%;height:100%;object-fit:cover;">`
+          : '<span style="font-size:2rem;">👤</span>'
+        }
       </div>
       <div class="post-body">
         <p class="post-meta">${a.especialidad}</p>
@@ -203,18 +208,18 @@ function initFiltros() {
 
 
 // ── INICIALIZAR AL CARGAR LA PÁGINA ──────────────────────
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
   if (document.getElementById('lista-contenidos')) {
-    renderizarContenidos('lista-contenidos');
+    await renderizarContenidos('lista-contenidos');
     initFiltros();
   }
 
   if (document.getElementById('lista-autores')) {
-    renderizarAutores('lista-autores');
+    await renderizarAutores('lista-autores');
   }
 
   // Preview en inicio: solo 3 contenidos
   if (document.getElementById('contenidos-preview')) {
-    renderizarContenidos('contenidos-preview', 3);
+    await renderizarContenidos('contenidos-preview', 3);
   }
 });

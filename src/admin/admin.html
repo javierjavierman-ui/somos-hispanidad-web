@@ -10,13 +10,21 @@
 </head>
 <body>
 
-<!-- AVISO: sin login real todavía -->
-<div class="admin-notice">
-  ⚙ <strong>Modo Desarrollo:</strong> Acceso sin autenticación. El sistema de login con Supabase se añadirá en una fase posterior.
+<!-- LOGIN WRAPPER -->
+<div id="login-wrapper" class="admin-login-wrapper">
+  <div class="admin-login-box">
+    <div class="admin-logo" style="margin-bottom: 24px; text-align: center;">Somos <span>Hispanidad</span><small>Admin</small></div>
+    <form id="admin-login-form">
+      <input type="email" id="login-email" class="admin-form-input" placeholder="Correo electrónico" required style="width:100%; margin-bottom:12px; padding:10px;">
+      <input type="password" id="login-password" class="admin-form-input" placeholder="Contraseña" required style="width:100%; margin-bottom:16px; padding:10px;">
+      <button type="submit" class="admin-btn admin-btn-primary" style="width:100%">Acceder</button>
+      <div id="login-error" style="color:red; font-size:0.8rem; margin-top:10px; display:none;">Error de inicio de sesión.</div>
+    </form>
+  </div>
 </div>
 
 <!-- LAYOUT PRINCIPAL -->
-<div class="admin-layout">
+<div id="dashboard-wrapper" class="admin-layout" style="display:none;">
 
   <!-- SIDEBAR -->
   <aside class="admin-sidebar">
@@ -178,6 +186,7 @@
   </main>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/supabaseClient.js"></script>
 <script src="admin.js"></script>
 </body>

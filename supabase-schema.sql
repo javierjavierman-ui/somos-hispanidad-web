@@ -131,3 +131,11 @@ INSERT INTO events (title, description, event_date, location, event_type, regist
   ('Presentación del Barómetro sobre la Hispanidad 2026',
    'Presentación pública de los resultados del Barómetro anual sobre la percepción de la Hispanidad en el mundo hispano. Día de la Hispanidad.',
    '2026-10-12', 'Madrid, España', 'Presentación', false);
+
+-- Políticas para Admin (Acceso total)
+CREATE POLICY "Admin ALL Authors" ON authors TO authenticated USING (true) WITH CHECK (true);
+CREATE POLICY "Admin ALL Contents" ON contents TO authenticated USING (true) WITH CHECK (true);
+CREATE POLICY "Admin ALL Events" ON events TO authenticated USING (true) WITH CHECK (true);
+CREATE POLICY "Admin ALL Registrations" ON event_registrations TO authenticated USING (true) WITH CHECK (true);
+CREATE POLICY "Admin ALL Supporters" ON supporters TO authenticated USING (true) WITH CHECK (true);
+CREATE POLICY "Admin ALL Messages" ON contact_messages TO authenticated USING (true) WITH CHECK (true);

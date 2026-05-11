@@ -116,3 +116,30 @@ body { font-family:'Lato',sans-serif; background:var(--cream); color:var(--ink);
   .admin-layout { grid-template-columns:1fr; }
   .admin-sidebar { position:static; height:auto; }
 }
+
+/* LOGIN STYLES */
+.admin-login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--bg-body, #fdfbf7);
+}
+.admin-login-box {
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+.admin-form-input {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+  outline: none;
+}
+.admin-form-input:focus {
+  border-color: var(--gold, #c19b6c);
+}

@@ -95,7 +95,7 @@
     <div class="admin-panel" id="panel-contenidos">
       <div class="admin-panel-header">
         <h2>Contenidos</h2>
-        <button class="admin-btn admin-btn-primary">+ Nuevo contenido</button>
+        <button id="btn-nuevo-contenido" class="admin-btn admin-btn-primary">+ Nuevo contenido</button>
       </div>
       <div class="admin-supabase-note">
         📌 En producción, esta tabla se cargará desde la tabla <code>contenidos</code> de Supabase.
@@ -184,6 +184,50 @@
     </div>
 
   </main>
+</div>
+
+<!-- MODAL NUEVO CONTENIDO -->
+<div id="modal-contenido" class="admin-modal" style="display:none;">
+  <div class="admin-modal-content">
+    <div class="admin-modal-header">
+      <h2>Añadir Nuevo Contenido</h2>
+      <button class="admin-close-modal" id="btn-cerrar-modal-contenido">&times;</button>
+    </div>
+    <form id="form-nuevo-contenido">
+      <div class="admin-form-group">
+        <label>Título</label>
+        <input type="text" id="cont-titulo" class="admin-form-input" required>
+      </div>
+      <div class="admin-form-group">
+        <label>Tipo de Contenido</label>
+        <select id="cont-tipo" class="admin-form-input">
+          <option value="Artículo">Artículo</option>
+          <option value="Vídeo">Vídeo</option>
+          <option value="Charla">Charla</option>
+          <option value="Documento">Documento</option>
+        </select>
+      </div>
+      <div class="admin-form-group">
+        <label>Autor</label>
+        <select id="cont-autor" class="admin-form-input">
+          <option value="">Selecciona un autor (opcional)</option>
+        </select>
+      </div>
+      <div class="admin-form-group">
+        <label>Enlace (YouTube o PDF)</label>
+        <input type="url" id="cont-url" class="admin-form-input" placeholder="https://...">
+      </div>
+      <div class="admin-form-group">
+        <label>Resumen / Descripción</label>
+        <textarea id="cont-resumen" class="admin-form-input" rows="3"></textarea>
+      </div>
+      <div class="admin-form-group" style="flex-direction:row; align-items:center;">
+        <input type="checkbox" id="cont-publicado" checked style="margin-right:10px;">
+        <label for="cont-publicado" style="margin:0;">Publicado inmediatamente</label>
+      </div>
+      <button type="submit" class="admin-btn admin-btn-primary" style="width:100%; margin-top:15px;">Guardar Contenido</button>
+    </form>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

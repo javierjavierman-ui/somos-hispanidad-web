@@ -210,4 +210,58 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
   });
 
+  // ── MODAL NUEVO CONTENIDO ──────────────────────────
+  const btnNuevoContenido = document.getElementById('btn-nuevo-contenido');
+  const modalContenido = document.getElementById('modal-contenido');
+  const btnCerrarModal = document.getElementById('btn-cerrar-modal-contenido');
+  const formContenido = document.getElementById('form-nuevo-contenido');
+
+  if (btnNuevoContenido && modalContenido) {
+    btnNuevoContenido.addEventListener('click', async () => {
+      // Cargar autores en el select
+      const selectAutor = document.getElementById('cont-autor');
+      const { data } = await supabaseClient.from('authors').select('id, name').order('name');
+      if (data) {
+        selectAutor.innerHTML = '<option value="">Selecciona un autor (opcional)</option>' + 
+          data.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
+      }
+      modalContenido.style.display = 'flex';
+    });
+
+    btnCerrarModal.addEventListener('click', () => {
+      modalContenido.style.display = 'none';
+      formContenido.reset();
+    });
+
+    formContenido.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const title = document.getElementById('cont-titulo').value;
+      const content_type = document.getElementById('cont-tipo').value;
+      const author_id = document.getElementById('cont-autor').value || null;
+      const youtube_url = document.getElementById('cont-url').value;
+      const summary = document.getElementById('cont-resumen').value;
+      const published = document.getElementById('cont-publicado').checked;
+
+      const btnSubmit = formContenido.querySelector('button[type="submit"]');
+      btnSubmit.textContent = 'Guardando...';
+      btnSubmit.disabled = true;
+
+      const { error } = await supabaseClient.from('contents').insert([{
+        title, content_type, author_id, youtube_url, summary, published
+      }]);
+
+      btnSubmit.textContent = 'Guardar Contenido';
+      btnSubmit.disabled = false;
+
+      if (error) {
+        alert('Error guardando contenido: ' + error.message);
+      } else {
+        modalContenido.style.display = 'none';
+        formContenido.reset();
+        loadContents(); // Recargar la tabla
+      }
+    });
+  }
+
 });

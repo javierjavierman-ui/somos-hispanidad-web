@@ -4,8 +4,7 @@
  * Archivo: src/js/contacto.js
  *
  * Gestiona el formulario de contacto.
- * De momento muestra un mensaje de confirmación local.
- * En el futuro enviará los datos a Supabase.
+ * Conectado a Supabase: guarda mensajes en la tabla "mensajes".
  * =====================================================
  */
 
@@ -14,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('form-contacto');
   if (!form) return;
 
-  form.addEventListener('submit', function (e) {
+  form.addEventListener('submit', async function (e) {
     e.preventDefault();
 
     const nombre  = document.getElementById('contacto-nombre')?.value.trim();
@@ -33,14 +32,25 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    // ── AQUÍ irá en el futuro la llamada a Supabase: ──────
-    // const enviado = await guardarMensaje(nombre, email, asunto, mensaje);
-    // if (enviado) { mostrarExito(); } else { mostrarError('Error al enviar.'); }
-    // ─────────────────────────────────────────────────────
+    // Deshabilitar botón mientras se envía
+    const btnSubmit = form.querySelector('button[type="submit"]');
+    if (btnSubmit) {
+      btnSubmit.disabled = true;
+      btnSubmit.textContent = 'Enviando...';
+    }
 
-    // Por ahora: simulamos el envío con éxito
-    console.log('Mensaje recibido (simulado):', { nombre, email, asunto, mensaje });
-    mostrarExito();
+    // Enviar a Supabase
+    const enviado = await guardarMensaje(nombre, email, asunto || 'Sin asunto', mensaje);
+
+    if (enviado) {
+      mostrarExito();
+    } else {
+      mostrarError('No se pudo enviar el mensaje. Inténtalo de nuevo o escríbenos a contacto@somoshispanidad.es.');
+      if (btnSubmit) {
+        btnSubmit.disabled = false;
+        btnSubmit.textContent = 'Enviar mensaje';
+      }
+    }
   });
 
 

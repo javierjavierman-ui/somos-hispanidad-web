@@ -222,4 +222,15 @@ document.addEventListener('DOMContentLoaded', async function() {
   if (document.getElementById('contenidos-preview')) {
     await renderizarContenidos('contenidos-preview', 3);
   }
+
+  // Actualizar enlace del Barómetro dinámicamente si existe en Supabase
+  const btnBarometro = document.getElementById('btn-barometro');
+  if (btnBarometro) {
+    const contenidos = await getContenidos();
+    // Buscar un contenido cuyo título contenga "Barómetro"
+    const barometroData = contenidos.find(c => c.titulo.toLowerCase().includes('barómetro'));
+    if (barometroData && barometroData.url && barometroData.url !== '#') {
+      btnBarometro.href = barometroData.url;
+    }
+  }
 });

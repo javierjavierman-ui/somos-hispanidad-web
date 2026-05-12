@@ -96,6 +96,7 @@
       <div class="admin-panel-header">
         <h2>Contenidos</h2>
         <button id="btn-nuevo-contenido" class="admin-btn admin-btn-primary">+ Nuevo contenido</button>
+        <button id="btn-carga-masiva" class="admin-btn admin-btn-outline">📂 Carga Masiva</button>
       </div>
       <div class="admin-supabase-note">
         📌 En producción, esta tabla se cargará desde la tabla <code>contenidos</code> de Supabase.
@@ -299,6 +300,30 @@
       </div>
       <button type="submit" class="admin-btn admin-btn-primary" style="width:100%; margin-top:15px;">Guardar Autor</button>
     </form>
+  </div>
+</div>
+
+<!-- MODAL CARGA MASIVA -->
+<div id="modal-carga-masiva" class="admin-modal" style="display:none;">
+  <div class="admin-modal-content" style="max-width: 800px;">
+    <div class="admin-modal-header">
+      <h2>Carga Masiva de Contenidos</h2>
+      <button class="admin-close-modal" id="btn-cerrar-modal-carga">&times;</button>
+    </div>
+    <div style="margin-bottom: 20px;">
+      <p style="font-size: 0.9rem; color: #666; line-height: 1.5;">
+        Pega aquí tus datos desde Excel o un CSV. Formato esperado (separado por tabulación o punto y coma):<br>
+        <code>Nombre Autor ; Título ; Tipo (vídeo/escrito) ; URL ; Resumen</code>
+      </p>
+    </div>
+    <textarea id="bulk-data" class="admin-form-input" rows="12" placeholder="César Pérez ; El Derecho en Indias ; escrito ; https://... ; Resumen corto..."></textarea>
+    
+    <div id="bulk-preview" style="margin-top: 15px; font-size: 0.85rem; max-height: 150px; overflow-y: auto; background: #f9f9f9; padding: 10px; border-radius: 4px; display:none;"></div>
+
+    <div style="margin-top: 20px; display: flex; gap: 10px;">
+      <button id="btn-procesar-carga" class="admin-btn admin-btn-primary" style="flex:1">Importar ahora</button>
+      <button id="btn-cancelar-carga" class="admin-btn" style="flex:1">Cancelar</button>
+    </div>
   </div>
 </div>
 

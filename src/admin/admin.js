@@ -462,6 +462,94 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
   }
 
+  // ── MODAL CARGA MASIVA ─────────────────────────────
+  const btnCargaMasiva = document.getElementById('btn-carga-masiva');
+  const modalCargaMasiva = document.getElementById('modal-carga-masiva');
+  const btnCerrarCarga = document.getElementById('btn-cerrar-modal-carga');
+  const btnProcesarCarga = document.getElementById('btn-procesar-carga');
+  const btnCancelarCarga = document.getElementById('btn-cancelar-carga');
+  const bulkDataArea = document.getElementById('bulk-data');
+
+  if (btnCargaMasiva && modalCargaMasiva) {
+    btnCargaMasiva.addEventListener('click', () => {
+      modalCargaMasiva.style.display = 'flex';
+      bulkDataArea.value = '';
+    });
+
+    [btnCerrarCarga, btnCancelarCarga].forEach(btn => {
+      btn?.addEventListener('click', () => modalCargaMasiva.style.display = 'none');
+    });
+
+    btnProcesarCarga.addEventListener('click', async () => {
+      const rawText = bulkDataArea.value.trim();
+      if (!rawText) return alert('Por favor, pega algunos datos.');
+
+      btnProcesarCarga.textContent = 'Procesando...';
+      btnProcesarCarga.disabled = true;
+
+      // 1. Obtener mapeo de autores para convertir nombres en IDs
+      const { data: authors } = await supabaseClient.from('authors').select('id, name');
+      const authorMap = {};
+      authors.forEach(a => authorMap[a.name.toLowerCase().trim()] = a.id);
+
+      // 2. Parsear líneas
+      const lines = rawText.split('\n');
+      const contentsToInsert = [];
+      let errors = [];
+
+      lines.forEach((line, index) => {
+        if (!line.trim()) return;
+
+        // Intentar separar por punto y coma o tabulación
+        const parts = line.includes(';') ? line.split(';') : line.split('\t');
+        
+        if (parts.length < 3) {
+          errors.push(`Línea ${index + 1}: Formato incorrecto.`);
+          return;
+        }
+
+        const authorName = parts[0]?.trim().toLowerCase();
+        const title = parts[1]?.trim();
+        const type = parts[2]?.trim().toLowerCase();
+        const url = parts[3]?.trim() || '';
+        const summary = parts[4]?.trim() || '';
+
+        const authorId = authorMap[authorName];
+        if (!authorId) {
+          errors.push(`Línea ${index + 1}: Autor "${parts[0]}" no encontrado.`);
+          return;
+        }
+
+        contentsToInsert.push({
+          author_id: authorId,
+          title: title,
+          content_type: type === 'video' ? 'vídeo' : type, // Normalizar tilde
+          youtube_url: url,
+          summary: summary,
+          published: true
+        });
+      });
+
+      if (contentsToInsert.length > 0) {
+        const { error } = await supabaseClient.from('contents').insert(contentsToInsert);
+        if (error) {
+          alert('Error en la inserción: ' + error.message);
+        } else {
+          alert(`¡Éxito! Se han importado ${contentsToInsert.length} contenidos.`);
+          modalCargaMasiva.style.display = 'none';
+          loadContents();
+        }
+      }
+
+      if (errors.length > 0) {
+        alert('Algunas líneas fallaron:\n' + errors.join('\n'));
+      }
+
+      btnProcesarCarga.textContent = 'Importar ahora';
+      btnProcesarCarga.disabled = false;
+    });
+  }
+
   // ── EXPORTAR SIMPATIZANTES A CSV ──────────────────
   const btnExportar = document.getElementById('btn-exportar-simpatizantes');
   if (btnExportar) {

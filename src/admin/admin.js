@@ -10,6 +10,8 @@
 
 document.addEventListener('DOMContentLoaded', async function () {
   
+  let editingId = null;
+
   // Referencias UI Auth
   const loginWrapper = document.getElementById('login-wrapper');
   const dashboardWrapper = document.getElementById('dashboard-wrapper');
@@ -139,7 +141,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     tbody.innerHTML = data.map(ev => {
       const d = new Date(ev.event_date).toLocaleDateString('es-ES');
       const badge = ev.registration_open ? '<span class="admin-badge green">Abierto</span>' : '<span class="admin-badge yellow">Cerrado</span>';
-      return `<tr><td>${d}</td><td>${ev.title}</td><td>${ev.event_type}</td><td>${ev.location}</td><td>${badge}</td><td><button class="admin-btn-sm" data-id="${ev.id}">Editar</button> <button class="admin-btn-sm red delete-btn" data-table="events" data-id="${ev.id}">Eliminar</button></td></tr>`;
+      return `<tr><td>${d}</td><td>${ev.title}</td><td>${ev.event_type}</td><td>${ev.location}</td><td>${badge}</td><td><button class="admin-btn-sm edit-btn" data-table="events" data-id="${ev.id}">Editar</button> <button class="admin-btn-sm red delete-btn" data-table="events" data-id="${ev.id}">Eliminar</button></td></tr>`;
     }).join('');
   }
 
@@ -159,7 +161,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     tbody.innerHTML = data.map(c => {
       const d = new Date(c.created_at).toLocaleDateString('es-ES');
       const autor = c.authors?.name || '-';
-      return `<tr><td>${d}</td><td>${c.title}</td><td>${c.content_type}</td><td>${autor}</td><td><button class="admin-btn-sm" data-id="${c.id}">Editar</button> <button class="admin-btn-sm red delete-btn" data-table="contents" data-id="${c.id}">Eliminar</button></td></tr>`;
+      return `<tr><td>${d}</td><td>${c.title}</td><td>${c.content_type}</td><td>${autor}</td><td><button class="admin-btn-sm edit-btn" data-table="contents" data-id="${c.id}">Editar</button> <button class="admin-btn-sm red delete-btn" data-table="contents" data-id="${c.id}">Eliminar</button></td></tr>`;
     }).join('');
   }
 
@@ -217,6 +219,60 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
   });
 
+  // ── EDITAR ELEMENTOS ─────────────────────────────
+  document.addEventListener('click', async function (e) {
+    if (e.target.classList.contains('edit-btn')) {
+      const table = e.target.getAttribute('data-table');
+      editingId = e.target.getAttribute('data-id');
+
+      // 1. Obtener datos actuales
+      const { data, error } = await supabaseClient.from(table).select('*').eq('id', editingId).single();
+      
+      if (error || !data) return alert('Error al cargar datos: ' + error.message);
+
+      if (table === 'contents') {
+        // Abrir modal contenidos en modo edición
+        document.getElementById('cont-titulo').value = data.title;
+        document.getElementById('cont-tipo').value = data.content_type;
+        document.getElementById('cont-url').value = data.youtube_url || '';
+        document.getElementById('cont-resumen').value = data.summary || '';
+        document.getElementById('cont-publicado').checked = data.published;
+        
+        // Cargar autores y seleccionar el correcto
+        const selectAutor = document.getElementById('cont-autor');
+        const { data: authors } = await supabaseClient.from('authors').select('id, name').order('name');
+        if (authors) {
+          selectAutor.innerHTML = '<option value="">Selecciona un autor (opcional)</option>' + 
+            authors.map(a => `<option value="${a.id}" ${a.id === data.author_id ? 'selected' : ''}>${a.name}</option>`).join('');
+        }
+        
+        document.querySelector('#modal-contenido h2').textContent = 'Editar Contenido';
+        document.getElementById('modal-contenido').style.display = 'flex';
+      } 
+      else if (table === 'events') {
+        // Abrir modal eventos en modo edición
+        document.getElementById('ev-titulo').value = data.title;
+        
+        // Formatear fecha para datetime-local (YYYY-MM-DDThh:mm)
+        if (data.event_date) {
+          const d = new Date(data.event_date);
+          const offset = d.getTimezoneOffset() * 60000;
+          const localISOTime = (new Date(d.getTime() - offset)).toISOString().slice(0, 16);
+          document.getElementById('ev-fecha').value = localISOTime;
+        }
+        
+        document.getElementById('ev-lugar').value = data.location || '';
+        document.getElementById('ev-tipo').value = data.event_type;
+        document.getElementById('ev-imagen').value = data.image_url || '';
+        document.getElementById('ev-descripcion').value = data.description || '';
+        document.getElementById('ev-registro').checked = data.registration_open;
+
+        document.querySelector('#modal-evento h2').textContent = 'Editar Evento';
+        document.getElementById('modal-evento').style.display = 'flex';
+      }
+    }
+  });
+
   // ── MODAL NUEVO CONTENIDO ──────────────────────────
   const btnNuevoContenido = document.getElementById('btn-nuevo-contenido');
   const modalContenido = document.getElementById('modal-contenido');
@@ -225,6 +281,10 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   if (btnNuevoContenido && modalContenido) {
     btnNuevoContenido.addEventListener('click', async () => {
+      editingId = null; // Modo creación
+      document.querySelector('#modal-contenido h2').textContent = 'Añadir Nuevo Contenido';
+      formContenido.reset();
+
       // Cargar autores en el select
       const selectAutor = document.getElementById('cont-autor');
       const { data } = await supabaseClient.from('authors').select('id, name').order('name');
@@ -254,9 +314,18 @@ document.addEventListener('DOMContentLoaded', async function () {
       btnSubmit.textContent = 'Guardando...';
       btnSubmit.disabled = true;
 
-      const { error } = await supabaseClient.from('contents').insert([{
+      const payload = {
         title, content_type, author_id, youtube_url, summary, published
-      }]);
+      };
+
+      let result;
+      if (editingId) {
+        result = await supabaseClient.from('contents').update(payload).eq('id', editingId);
+      } else {
+        result = await supabaseClient.from('contents').insert([payload]);
+      }
+
+      const { error } = result;
 
       btnSubmit.textContent = 'Guardar Contenido';
       btnSubmit.disabled = false;
@@ -279,6 +348,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   if (btnNuevoEvento && modalEvento) {
     btnNuevoEvento.addEventListener('click', () => {
+      editingId = null; // Modo creación
+      document.querySelector('#modal-evento h2').textContent = 'Añadir Nuevo Evento';
+      formEvento.reset();
       modalEvento.style.display = 'flex';
     });
 
@@ -302,9 +374,18 @@ document.addEventListener('DOMContentLoaded', async function () {
       btnSubmit.textContent = 'Guardando...';
       btnSubmit.disabled = true;
 
-      const { error } = await supabaseClient.from('events').insert([{
+      const payload = {
         title, event_date, location, event_type, image_url, description, registration_open
-      }]);
+      };
+
+      let result;
+      if (editingId) {
+        result = await supabaseClient.from('events').update(payload).eq('id', editingId);
+      } else {
+        result = await supabaseClient.from('events').insert([payload]);
+      }
+
+      const { error } = result;
 
       btnSubmit.textContent = 'Guardar Evento';
       btnSubmit.disabled = false;

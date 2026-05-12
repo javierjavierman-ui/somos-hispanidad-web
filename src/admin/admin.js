@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (data.length === 0) return tbody.innerHTML = '<tr><td colspan="4">No hay autores</td></tr>';
     
     tbody.innerHTML = data.map(a => {
-      return `<tr><td>${a.name}</td><td colspan="2">${a.bio?.substring(0,50)}...</td><td><button class="admin-btn-sm" data-id="${a.id}">Editar</button> <button class="admin-btn-sm red delete-btn" data-table="authors" data-id="${a.id}">Eliminar</button></td></tr>`;
+      return `<tr><td>${a.name}</td><td colspan="2">${a.bio?.substring(0,50)}...</td><td><button class="admin-btn-sm edit-btn" data-table="authors" data-id="${a.id}">Editar</button> <button class="admin-btn-sm red delete-btn" data-table="authors" data-id="${a.id}">Eliminar</button></td></tr>`;
     }).join('');
   }
 
@@ -269,6 +269,15 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         document.querySelector('#modal-evento h2').textContent = 'Editar Evento';
         document.getElementById('modal-evento').style.display = 'flex';
+      }
+      else if (table === 'authors') {
+        // Abrir modal autores en modo edición
+        document.getElementById('aut-nombre').value = data.name;
+        document.getElementById('aut-foto').value = data.photo_url || '';
+        document.getElementById('aut-bio').value = data.bio || '';
+
+        document.querySelector('#modal-autor h2').textContent = 'Editar Autor';
+        document.getElementById('modal-autor').style.display = 'flex';
       }
     }
   });
@@ -396,6 +405,59 @@ document.addEventListener('DOMContentLoaded', async function () {
         modalEvento.style.display = 'none';
         formEvento.reset();
         loadEvents(); // Recargar la tabla
+      }
+    });
+  }
+
+  // ── MODAL NUEVO AUTOR ─────────────────────────────
+  const btnNuevoAutor = document.getElementById('btn-nuevo-autor');
+  const modalAutor = document.getElementById('modal-autor');
+  const btnCerrarModalAutor = document.getElementById('btn-cerrar-modal-autor');
+  const formAutor = document.getElementById('form-nuevo-autor');
+
+  if (btnNuevoAutor && modalAutor) {
+    btnNuevoAutor.addEventListener('click', () => {
+      editingId = null;
+      document.querySelector('#modal-autor h2').textContent = 'Añadir Nuevo Autor';
+      formAutor.reset();
+      modalAutor.style.display = 'flex';
+    });
+
+    btnCerrarModalAutor.addEventListener('click', () => {
+      modalAutor.style.display = 'none';
+      formAutor.reset();
+    });
+
+    formAutor.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('aut-nombre').value;
+      const photo_url = document.getElementById('aut-foto').value;
+      const bio = document.getElementById('aut-bio').value;
+
+      const btnSubmit = formAutor.querySelector('button[type="submit"]');
+      btnSubmit.textContent = 'Guardando...';
+      btnSubmit.disabled = true;
+
+      const payload = { name, photo_url, bio };
+
+      let result;
+      if (editingId) {
+        result = await supabaseClient.from('authors').update(payload).eq('id', editingId);
+      } else {
+        result = await supabaseClient.from('authors').insert([payload]);
+      }
+
+      const { error } = result;
+      btnSubmit.textContent = 'Guardar Autor';
+      btnSubmit.disabled = false;
+
+      if (error) {
+        alert('Error guardando autor: ' + error.message);
+      } else {
+        modalAutor.style.display = 'none';
+        formAutor.reset();
+        loadAuthors(); // Recargar tabla
       }
     });
   }

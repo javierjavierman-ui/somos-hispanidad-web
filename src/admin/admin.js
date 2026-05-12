@@ -146,8 +146,15 @@ document.addEventListener('DOMContentLoaded', async function () {
   async function loadContents() {
     const { data, error } = await supabaseClient.from('contents').select('*, authors(name)').order('created_at', { ascending: false });
     const tbody = document.querySelector('#panel-contenidos tbody');
-    if (error || !data) return tbody.innerHTML = '<tr><td colspan="5">Error cargando contenidos</td></tr>';
-    if (data.length === 0) return tbody.innerHTML = '<tr><td colspan="5">No hay contenidos</td></tr>';
+    
+    if (error) {
+      console.error('Error Supabase (Contents):', error);
+      return tbody.innerHTML = `<tr><td colspan="5" style="color:red;">Error: ${error.message} (Código: ${error.code})</td></tr>`;
+    }
+    
+    if (!data || data.length === 0) {
+      return tbody.innerHTML = '<tr><td colspan="5">No se encontraron contenidos. Asegúrate de que existan en la tabla "contents".</td></tr>';
+    }
     
     tbody.innerHTML = data.map(c => {
       const d = new Date(c.created_at).toLocaleDateString('es-ES');

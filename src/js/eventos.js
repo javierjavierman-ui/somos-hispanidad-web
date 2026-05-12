@@ -99,14 +99,17 @@ async function renderizarEventos(contenedorId, limite = 0) {
         <h3 class="evento-title">${ev.titulo}</h3>
         <p class="evento-loc">📍 ${ev.lugar}</p>
         <p style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--ink-soft); margin-bottom:16px; line-height:1.7;">${ev.descripcion}</p>
-        <a href="${limite > 0 ? 'src/pages/eventos.html#inscripcion' : '#inscripcion'}" class="btn-primary btn-inscribirse" data-id="${ev.id}" style="font-size:0.7rem; padding:10px 22px;">
+        <a href="${limite > 0 ? 'src/pages/eventos.html#inscripcion?id=' + ev.id : '#inscripcion'}" 
+           class="btn-primary btn-inscribirse" 
+           data-id="${ev.id}" 
+           style="font-size:0.7rem; padding:10px 22px;">
           Inscribirse
         </a>
       </div>
     </div>
   `).join('');
 
-  // Delegación de eventos para auto-seleccionar en el formulario
+  // Delegación de eventos para auto-seleccionar en el formulario (mismo panel)
   contenedor.addEventListener('click', function(e) {
     const btn = e.target.closest('.btn-inscribirse');
     if (btn) {
@@ -123,24 +126,29 @@ async function renderizarEventos(contenedorId, limite = 0) {
 
 
 // ── FUNCIÓN: FORMULARIO DE INSCRIPCIÓN ────────────────────
-/**
- * Gestiona el formulario de inscripción a un evento.
- * De momento muestra un mensaje; en el futuro enviará datos a Supabase.
- */
 async function initFormularioInscripcion() {
   const form = document.getElementById('form-inscripcion');
   if (!form) return;
 
-  // Rellenar el selector con eventos desde Supabase
   const selectEvento = document.getElementById('select-evento');
   if (selectEvento) {
     const eventos = await getEventos();
+    // Limpiar opciones previas excepto la primera
+    selectEvento.innerHTML = '<option value="">— Selecciona un evento —</option>';
     eventos.forEach(ev => {
       const option = document.createElement('option');
       option.value = ev.id;
       option.textContent = `${ev.dia} ${ev.mes} · ${ev.titulo}`;
       selectEvento.appendChild(option);
     });
+
+    // AUTO-SELECCIONAR POR URL
+    // Si la URL viene con ?id=... (desde el home)
+    const urlParams = new URLSearchParams(window.location.hash.split('?')[1]);
+    const preselectedId = urlParams.get('id');
+    if (preselectedId) {
+      selectEvento.value = preselectedId;
+    }
   }
 
   form.addEventListener('submit', async function(e) {
@@ -157,15 +165,23 @@ async function initFormularioInscripcion() {
       return;
     }
 
+    const btn = form.querySelector('button[type="submit"]');
+    btn.textContent = 'Procesando...';
+    btn.disabled = true;
+
     // Guardar inscripción en Supabase
     const ok = await registrarInscripcion(evento, nombre, email, phone, comments);
 
-    const exito = document.getElementById('inscripcion-exito');
-    if (ok && exito) {
-      exito.style.display = 'block';
+    btn.textContent = 'Solicitar plaza';
+    btn.disabled = false;
+
+    if (ok) {
+      const exito = document.getElementById('inscripcion-exito');
+      if (exito) exito.style.display = 'block';
       form.style.display = 'none';
-    } else if (!ok) {
-      alert('Error al registrar la inscripción. Inténtalo de nuevo.');
+      window.scrollTo({ top: document.getElementById('inscripcion').offsetTop - 100, behavior: 'smooth' });
+    } else {
+      alert('Hubo un problema técnico al registrar tu inscripción. Por favor, contacta directamente con nosotros en contacto@somoshispanidad.es');
     }
   });
 }

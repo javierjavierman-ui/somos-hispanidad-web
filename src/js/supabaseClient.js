@@ -82,9 +82,11 @@ async function getContenidos() {
     if (data && data.length > 0) {
       return data.map(c => ({
         id: c.id,
-        tipo: c.content_type === 'escrito' ? 'Artículo'
-            : c.content_type === 'vídeo' ? 'Vídeo'
-            : c.content_type === 'charla' ? 'Charla Temática'
+        tipo: c.content_type === 'escrito' || c.content_type === 'Escrito' ? 'Escrito'
+            : c.content_type === 'acta' || c.content_type === 'Acta' ? 'Acta'
+            : c.content_type === 'barometro' || c.content_type === 'Barómetro' ? 'Barómetro'
+            : c.content_type === 'vídeo' || c.content_type === 'Vídeo' ? 'Vídeo'
+            : c.content_type === 'conferencia' || c.content_type === 'Conferencia' ? 'Conferencia'
             : c.content_type,
         titulo: c.title,
         autor: c.authors?.name || 'Somos Hispanidad',

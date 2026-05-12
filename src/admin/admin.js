@@ -462,4 +462,40 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
   }
 
+  // ── EXPORTAR SIMPATIZANTES A CSV ──────────────────
+  const btnExportar = document.getElementById('btn-exportar-simpatizantes');
+  if (btnExportar) {
+    btnExportar.addEventListener('click', async () => {
+      // 1. Obtener todos los simpatizantes
+      const { data, error } = await supabaseClient.from('supporters').select('*').order('name');
+      
+      if (error) return alert('Error al obtener datos: ' + error.message);
+      if (!data || data.length === 0) return alert('No hay datos para exportar.');
+
+      // 2. Generar CSV
+      const headers = ['Nombre', 'Email', 'Fuente', 'Fecha Registro'];
+      const csvRows = [
+        headers.join(','), // Cabecera
+        ...data.map(s => [
+          `"${s.name}"`,
+          `"${s.email}"`,
+          `"${s.source || 'web'}"`,
+          `"${new Date(s.created_at).toLocaleDateString()}"`
+        ].join(','))
+      ];
+      const csvString = csvRows.join('\n');
+
+      // 3. Descargar archivo
+      const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `simpatizantes_somos_hispanidad_${new Date().toISOString().slice(0,10)}.csv`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  }
+
 });

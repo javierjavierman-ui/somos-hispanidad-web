@@ -271,4 +271,52 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
   }
 
+  // ── MODAL NUEVO EVENTO ─────────────────────────────
+  const btnNuevoEvento = document.getElementById('btn-nuevo-evento');
+  const modalEvento = document.getElementById('modal-evento');
+  const btnCerrarModalEvento = document.getElementById('btn-cerrar-modal-evento');
+  const formEvento = document.getElementById('form-nuevo-evento');
+
+  if (btnNuevoEvento && modalEvento) {
+    btnNuevoEvento.addEventListener('click', () => {
+      modalEvento.style.display = 'flex';
+    });
+
+    btnCerrarModalEvento.addEventListener('click', () => {
+      modalEvento.style.display = 'none';
+      formEvento.reset();
+    });
+
+    formEvento.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const title = document.getElementById('ev-titulo').value;
+      const event_date = document.getElementById('ev-fecha').value;
+      const location = document.getElementById('ev-lugar').value;
+      const event_type = document.getElementById('ev-tipo').value;
+      const image_url = document.getElementById('ev-imagen').value;
+      const description = document.getElementById('ev-descripcion').value;
+      const registration_open = document.getElementById('ev-registro').checked;
+
+      const btnSubmit = formEvento.querySelector('button[type="submit"]');
+      btnSubmit.textContent = 'Guardando...';
+      btnSubmit.disabled = true;
+
+      const { error } = await supabaseClient.from('events').insert([{
+        title, event_date, location, event_type, image_url, description, registration_open
+      }]);
+
+      btnSubmit.textContent = 'Guardar Evento';
+      btnSubmit.disabled = false;
+
+      if (error) {
+        alert('Error guardando evento: ' + error.message);
+      } else {
+        modalEvento.style.display = 'none';
+        formEvento.reset();
+        loadEvents(); // Recargar la tabla
+      }
+    });
+  }
+
 });

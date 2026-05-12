@@ -170,11 +170,14 @@ async function registrarInscripcion(event_id, nombre, email, phone, comments) {
       .from('event_registrations')
       .insert([{ event_id, name: nombre, email, phone: phone || null, comments: comments || null }]);
 
-    if (error) throw error;
+    if (error) {
+      console.error('❌ Error de Supabase al registrar:', error);
+      throw error;
+    }
     console.log('✅ Inscripción registrada en Supabase');
     return true;
   } catch (err) {
-    console.error('❌ Error registrando inscripción:', err.message);
+    console.error('❌ Error registrando inscripción:', err.message, err);
     return false;
   }
 }

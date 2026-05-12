@@ -15,7 +15,7 @@
 
 const EVENTOS_SIMULADOS = [
   {
-    id: 1,
+    id: "00000000-0000-0000-0000-000000000001",
     titulo: "Visita guiada al Monasterio del Escorial con comida de hermandad",
     fecha: "2026-06-20",
     dia: "20",
@@ -24,11 +24,11 @@ const EVENTOS_SIMULADOS = [
     lugar: "Real Monasterio de San Lorenzo de El Escorial, Madrid",
     tipo: "Visita Cultural",
     descripcion: "Una jornada especial en uno de los monumentos más emblemáticos del imperio español. Incluye visita guiada y comida de hermandad con los socios.",
-    url_inscripcion: "https://www.somoshispanidad.es/detalles-y-registro/visita-guiada-al-monasterio-del-escorial-con-comida-de-hermandad",
+    url_inscripcion: "#inscripcion",
     estado: "abierto"
   },
   {
-    id: 2,
+    id: "00000000-0000-0000-0000-000000000002",
     titulo: "Conferencia: La España Olvidada — Legado jurídico en América",
     fecha: "2026-07-15",
     dia: "15",
@@ -37,34 +37,8 @@ const EVENTOS_SIMULADOS = [
     lugar: "Madrid, España (sede por confirmar)",
     tipo: "Conferencia",
     descripcion: "Análisis profundo del sistema jurídico que España implantó en América, sus raíces romanas y su influencia en los ordenamientos modernos hispanoamericanos.",
-    url_inscripcion: "#contacto",
+    url_inscripcion: "#inscripcion",
     estado: "abierto"
-  },
-  {
-    id: 3,
-    titulo: "Ciclo Indígenas — El Papel en la Conquista: Perú y el Caribe",
-    fecha: "2026-09-10",
-    dia: "10",
-    mes: "Sep",
-    anio: "2026",
-    lugar: "Online · Plataforma Zoom",
-    tipo: "Charla Online",
-    descripcion: "Segunda entrega del ciclo sobre el papel activo de los pueblos originarios durante la conquista. Ponente: Dr. José J. Laorden.",
-    url_inscripcion: "#contacto",
-    estado: "proximo"
-  },
-  {
-    id: 4,
-    titulo: "Presentación del Barómetro sobre la Hispanidad 2026",
-    fecha: "2026-10-12",
-    dia: "12",
-    mes: "Oct",
-    anio: "2026",
-    lugar: "Madrid, España",
-    tipo: "Presentación",
-    descripcion: "Presentación pública de los resultados del Barómetro anual sobre la percepción de la Hispanidad en el mundo hispano. Día de la Hispanidad.",
-    url_inscripcion: "#contacto",
-    estado: "proximo"
   }
 ];
 
@@ -170,17 +144,20 @@ async function initFormularioInscripcion() {
     btn.disabled = true;
 
     // Guardar inscripción en Supabase
+    console.log('Enviando inscripción:', { evento, nombre, email });
     const ok = await registrarInscripcion(evento, nombre, email, phone, comments);
 
     btn.textContent = 'Solicitar plaza';
     btn.disabled = false;
 
     if (ok) {
+      console.log('Inscripción exitosa');
       const exito = document.getElementById('inscripcion-exito');
       if (exito) exito.style.display = 'block';
       form.style.display = 'none';
       window.scrollTo({ top: document.getElementById('inscripcion').offsetTop - 100, behavior: 'smooth' });
     } else {
+      console.error('Fallo en registrarInscripcion');
       alert('Hubo un problema técnico al registrar tu inscripción. Por favor, contacta directamente con nosotros en contacto@somoshispanidad.es');
     }
   });

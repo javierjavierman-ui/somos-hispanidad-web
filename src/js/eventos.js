@@ -99,12 +99,24 @@ async function renderizarEventos(contenedorId, limite = 0) {
         <h3 class="evento-title">${ev.titulo}</h3>
         <p class="evento-loc">📍 ${ev.lugar}</p>
         <p style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--ink-soft); margin-bottom:16px; line-height:1.7;">${ev.descripcion}</p>
-        <a href="${ev.url_inscripcion}" class="btn-primary" style="font-size:0.7rem; padding:10px 22px;" ${ev.url_inscripcion.startsWith('http') ? 'target="_blank"' : ''}>
+        <a href="${limite > 0 ? 'src/pages/eventos.html#inscripcion' : '#inscripcion'}" class="btn-primary btn-inscribirse" data-id="${ev.id}" style="font-size:0.7rem; padding:10px 22px;">
           Inscribirse
         </a>
       </div>
     </div>
   `).join('');
+
+  // Delegación de eventos para auto-seleccionar en el formulario
+  contenedor.addEventListener('click', function(e) {
+    const btn = e.target.closest('.btn-inscribirse');
+    if (btn) {
+      const eventId = btn.getAttribute('data-id');
+      const select = document.getElementById('select-evento');
+      if (select) {
+        select.value = eventId;
+      }
+    }
+  });
 
   activarReveal();
 }

@@ -1137,8 +1137,58 @@ footer {
   max-width: 1100px;
   margin: 0 auto;
   padding: 100px 40px;
-  display: flex;
-  justify-content: center;
+}
+
+.acto-card {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 60px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 40px;
+  border-radius: 4px;
+  border: 1px solid rgba(212, 184, 150, 0.1);
+  transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+.acto-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold-soft);
+}
+
+.acto-image {
+  width: 100%;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.acto-content {
+  text-align: left;
+}
+
+.acto-title {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+}
+
+.acto-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: var(--cream-dark);
+}
+
+@media (max-width: 900px) {
+  .acto-card {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 24px;
+  }
+  .acto-title { font-size: 1.2rem; }
 }
 
 #actos-culturales .section-title { color: var(--cream); }

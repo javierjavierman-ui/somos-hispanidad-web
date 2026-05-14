@@ -135,8 +135,11 @@ document.addEventListener('DOMContentLoaded', async function () {
   async function loadEvents() {
     const { data, error } = await supabaseClient.from('events').select('*').order('event_date', { ascending: false });
     const tbody = document.querySelector('#panel-eventos tbody');
-    if (error || !data) return tbody.innerHTML = '<tr><td colspan="6">Error cargando eventos</td></tr>';
-    if (data.length === 0) return tbody.innerHTML = '<tr><td colspan="6">No hay eventos</td></tr>';
+    if (error) {
+      console.error('Error Supabase (Events):', error);
+      return tbody.innerHTML = `<tr><td colspan="6" style="color:red; padding:20px;">Error cargando eventos: ${error.message}</td></tr>`;
+    }
+    if (!data || data.length === 0) return tbody.innerHTML = '<tr><td colspan="6" style="padding:20px;">No hay eventos registrados.</td></tr>';
     
     tbody.innerHTML = data.map(ev => {
       const d = new Date(ev.event_date).toLocaleDateString('es-ES');
@@ -152,11 +155,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     
     if (error) {
       console.error('Error Supabase (Contents):', error);
-      return tbody.innerHTML = `<tr><td colspan="5" style="color:red;">Error: ${error.message} (Código: ${error.code})</td></tr>`;
+      return tbody.innerHTML = `<tr><td colspan="6" style="color:red; padding:20px;">Error cargando contenidos: ${error.message}</td></tr>`;
     }
     
     if (!data || data.length === 0) {
-      return tbody.innerHTML = '<tr><td colspan="5">No se encontraron contenidos. Asegúrate de que existan en la tabla "contents".</td></tr>';
+      return tbody.innerHTML = '<tr><td colspan="6" style="padding:20px;">No se encontraron contenidos. Asegúrate de haber ejecutado el SQL en Supabase.</td></tr>';
     }
     
     tbody.innerHTML = data.map(c => {
@@ -183,8 +186,11 @@ document.addEventListener('DOMContentLoaded', async function () {
   async function loadAuthors() {
     const { data, error } = await supabaseClient.from('authors').select('*').order('name');
     const tbody = document.querySelector('#panel-autores tbody');
-    if (error || !data) return tbody.innerHTML = '<tr><td colspan="4">Error cargando autores</td></tr>';
-    if (data.length === 0) return tbody.innerHTML = '<tr><td colspan="4">No hay autores</td></tr>';
+    if (error) {
+      console.error('Error Supabase (Authors):', error);
+      return tbody.innerHTML = '<tr><td colspan="4" style="color:red; padding:20px;">Error cargando autores</td></tr>';
+    }
+    if (!data || data.length === 0) return tbody.innerHTML = '<tr><td colspan="4" style="padding:20px;">No hay autores registrados.</td></tr>';
     
     tbody.innerHTML = data.map(a => {
       const badgePub = a.published ? '<span class="admin-badge green">Visible</span>' : '<span class="admin-badge red" style="background:#fee2e2; color:#b91c1c;">Oculto</span>';

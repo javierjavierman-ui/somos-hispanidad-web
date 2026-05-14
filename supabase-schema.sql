@@ -7,6 +7,7 @@
 CREATE TABLE IF NOT EXISTS authors (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
+  cargo TEXT,
   bio TEXT,
   photo_url TEXT,
   published BOOLEAN DEFAULT true,

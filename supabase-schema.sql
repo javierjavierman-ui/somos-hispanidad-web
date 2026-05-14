@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS authors (
   name TEXT NOT NULL,
   bio TEXT,
   photo_url TEXT,
+  published BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -37,6 +38,7 @@ CREATE TABLE IF NOT EXISTS events (
   event_type TEXT DEFAULT 'Evento',
   image_url TEXT,
   registration_open BOOLEAN DEFAULT true,
+  published BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 

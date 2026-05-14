@@ -140,8 +140,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     
     tbody.innerHTML = data.map(ev => {
       const d = new Date(ev.event_date).toLocaleDateString('es-ES');
-      const badge = ev.registration_open ? '<span class="admin-badge green">Abierto</span>' : '<span class="admin-badge yellow">Cerrado</span>';
-      return `<tr><td>${d}</td><td>${ev.title}</td><td>${ev.event_type}</td><td>${ev.location}</td><td>${badge}</td><td><button class="admin-btn-sm edit-btn" data-table="events" data-id="${ev.id}">Editar</button> <button class="admin-btn-sm red delete-btn" data-table="events" data-id="${ev.id}">Eliminar</button></td></tr>`;
+      const badgeReg = ev.registration_open ? '<span class="admin-badge green">Abierto</span>' : '<span class="admin-badge yellow">Cerrado</span>';
+      const badgePub = ev.published ? '<span class="admin-badge green">Visible</span>' : '<span class="admin-badge red" style="background:#fee2e2; color:#b91c1c;">Oculto</span>';
+      return `<tr><td>${d}</td><td>${ev.title}</td><td>${ev.event_type}</td><td>${ev.location}</td><td>${badgePub} ${badgeReg}</td><td><button class="admin-btn-sm edit-btn" data-table="events" data-id="${ev.id}">Editar</button> <button class="admin-btn-sm red delete-btn" data-table="events" data-id="${ev.id}">Eliminar</button></td></tr>`;
     }).join('');
   }
 
@@ -186,7 +187,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (data.length === 0) return tbody.innerHTML = '<tr><td colspan="4">No hay autores</td></tr>';
     
     tbody.innerHTML = data.map(a => {
-      return `<tr><td>${a.name}</td><td colspan="2">${a.bio?.substring(0,50)}...</td><td><button class="admin-btn-sm edit-btn" data-table="authors" data-id="${a.id}">Editar</button> <button class="admin-btn-sm red delete-btn" data-table="authors" data-id="${a.id}">Eliminar</button></td></tr>`;
+      const badgePub = a.published ? '<span class="admin-badge green">Visible</span>' : '<span class="admin-badge red" style="background:#fee2e2; color:#b91c1c;">Oculto</span>';
+      return `<tr><td>${a.name}</td><td>${a.cargo || '-'}</td><td>${badgePub}</td><td><button class="admin-btn-sm edit-btn" data-table="authors" data-id="${a.id}">Editar</button> <button class="admin-btn-sm red delete-btn" data-table="authors" data-id="${a.id}">Eliminar</button></td></tr>`;
     }).join('');
   }
 
@@ -280,6 +282,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         document.getElementById('ev-imagen').value = data.image_url || '';
         document.getElementById('ev-descripcion').value = data.description || '';
         document.getElementById('ev-registro').checked = data.registration_open;
+        document.getElementById('ev-publicado').checked = data.published;
 
         document.querySelector('#modal-evento h2').textContent = 'Editar Evento';
         document.getElementById('modal-evento').style.display = 'flex';
@@ -289,6 +292,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         document.getElementById('aut-nombre').value = data.name;
         document.getElementById('aut-foto').value = data.photo_url || '';
         document.getElementById('aut-bio').value = data.bio || '';
+        document.getElementById('aut-publicado').checked = data.published;
 
         document.querySelector('#modal-autor h2').textContent = 'Editar Autor';
         document.getElementById('modal-autor').style.display = 'flex';
@@ -392,13 +396,14 @@ document.addEventListener('DOMContentLoaded', async function () {
       const image_url = document.getElementById('ev-imagen').value;
       const description = document.getElementById('ev-descripcion').value;
       const registration_open = document.getElementById('ev-registro').checked;
+      const published = document.getElementById('ev-publicado').checked;
 
       const btnSubmit = formEvento.querySelector('button[type="submit"]');
       btnSubmit.textContent = 'Guardando...';
       btnSubmit.disabled = true;
 
       const payload = {
-        title, event_date, location, event_type, image_url, description, registration_open
+        title, event_date, location, event_type, image_url, description, registration_open, published
       };
 
       let result;
@@ -449,11 +454,13 @@ document.addEventListener('DOMContentLoaded', async function () {
       const photo_url = document.getElementById('aut-foto').value;
       const bio = document.getElementById('aut-bio').value;
 
+      const published = document.getElementById('aut-publicado').checked;
+
       const btnSubmit = formAutor.querySelector('button[type="submit"]');
       btnSubmit.textContent = 'Guardando...';
       btnSubmit.disabled = true;
 
-      const payload = { name, photo_url, bio };
+      const payload = { name, photo_url, bio, published };
 
       let result;
       if (editingId) {

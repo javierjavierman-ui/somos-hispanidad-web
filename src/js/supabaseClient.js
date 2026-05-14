@@ -32,6 +32,7 @@ async function getEventos() {
     const { data, error } = await supabaseClient
       .from('events')
       .select('*')
+      .eq('published', true)
       .order('event_date', { ascending: true });
 
     if (error) throw error;
@@ -117,6 +118,7 @@ async function getAutores() {
     const { data, error } = await supabaseClient
       .from('authors')
       .select('*')
+      .eq('published', true)
       .order('name', { ascending: true });
 
     if (error) throw error;

@@ -123,7 +123,7 @@
       <div class="admin-table-wrap">
         <table class="admin-table">
           <thead>
-            <tr><th>Nombre</th><th>Cargo</th><th>Especialidad</th><th>Acciones</th></tr>
+            <tr><th>Nombre</th><th>Cargo</th><th>Estado</th><th>Acciones</th></tr>
           </thead>
           <tbody>
             <tr><td>César Pérez Guevara</td><td>Historiador</td><td>Derecho colonial</td><td><button class="admin-btn-sm">Editar</button> <button class="admin-btn-sm red">Eliminar</button></td></tr>
@@ -269,6 +269,10 @@
         <input type="checkbox" id="ev-registro" checked style="margin-right:10px;">
         <label for="ev-registro" style="margin:0;">Inscripción abierta</label>
       </div>
+      <div class="admin-form-group" style="flex-direction:row; align-items:center;">
+        <input type="checkbox" id="ev-publicado" checked style="margin-right:10px;">
+        <label for="ev-publicado" style="margin:0; font-weight: 600;">Visible en la web</label>
+      </div>
       <button type="submit" class="admin-btn admin-btn-primary" style="width:100%; margin-top:15px;">Guardar Evento</button>
     </form>
   </div>
@@ -293,6 +297,10 @@
       <div class="admin-form-group">
         <label>Biografía / Descripción</label>
         <textarea id="aut-bio" class="admin-form-input" rows="4"></textarea>
+      </div>
+      <div class="admin-form-group" style="flex-direction:row; align-items:center;">
+        <input type="checkbox" id="aut-publicado" checked style="margin-right:10px;">
+        <label for="aut-publicado" style="margin:0; font-weight: 600;">Visible en la web</label>
       </div>
       <button type="submit" class="admin-btn admin-btn-primary" style="width:100%; margin-top:15px;">Guardar Autor</button>
     </form>

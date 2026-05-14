@@ -161,7 +161,21 @@ document.addEventListener('DOMContentLoaded', async function () {
     tbody.innerHTML = data.map(c => {
       const d = new Date(c.created_at).toLocaleDateString('es-ES');
       const autor = c.authors?.name || '-';
-      return `<tr><td>${d}</td><td>${c.title}</td><td>${c.content_type}</td><td>${autor}</td><td><button class="admin-btn-sm edit-btn" data-table="contents" data-id="${c.id}">Editar</button> <button class="admin-btn-sm red delete-btn" data-table="contents" data-id="${c.id}">Eliminar</button></td></tr>`;
+      const statusBadge = c.published 
+        ? '<span class="admin-badge green">Visible</span>' 
+        : '<span class="admin-badge red" style="background:#fee2e2; color:#b91c1c;">Oculto</span>';
+      
+      return `<tr>
+        <td>${d}</td>
+        <td>${c.title}</td>
+        <td>${c.content_type}</td>
+        <td>${autor}</td>
+        <td>${statusBadge}</td>
+        <td>
+          <button class="admin-btn-sm edit-btn" data-table="contents" data-id="${c.id}">Editar</button> 
+          <button class="admin-btn-sm red delete-btn" data-table="contents" data-id="${c.id}">Eliminar</button>
+        </td>
+      </tr>`;
     }).join('');
   }
 

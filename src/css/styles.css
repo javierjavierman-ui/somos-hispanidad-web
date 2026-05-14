@@ -1126,35 +1126,33 @@ footer {
   top: 90px;
 }
 
-/* ── VIRREINATOS ── */
-#virreinatos {
+/* ── ACTOS CULTURALES ── */
+#actos-culturales {
   background: var(--ink);
   position: relative;
   overflow: hidden;
 }
 
-.virreinatos-inner {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  align-items: center;
-  gap: 80px;
+.actos-culturales-inner {
   max-width: 1100px;
   margin: 0 auto;
   padding: 100px 40px;
+  display: flex;
+  justify-content: center;
 }
 
-#virreinatos .section-title { color: var(--cream); }
-#virreinatos .section-label { color: var(--gold-light); }
-#virreinatos .ornament-line { background: linear-gradient(to right, var(--gold), transparent); }
+#actos-culturales .section-title { color: var(--cream); }
+#actos-culturales .section-label { color: var(--gold-light); }
+#actos-culturales .ornament-line { background: linear-gradient(to right, var(--gold), transparent); }
 
-.virreinatos-text {
+.actos-culturales-text {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.15rem;
   line-height: 1.85;
   color: var(--sepia-light);
 }
 
-.virreinatos-map {
+.actos-culturales-map {
   width: 100%;
   object-fit: contain;
   filter: sepia(15%) contrast(1.1) brightness(0.95);

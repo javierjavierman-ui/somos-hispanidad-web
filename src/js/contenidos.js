@@ -112,7 +112,7 @@ async function renderizarContenidos(contenedorId, limite = 0, filtroTipo = '') {
   }
 
   contenedor.innerHTML = lista.map(c => `
-    <article class="post-card reveal">
+    <article class="post-card reveal" id="${c.titulo.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}">
       ${c.imagen
         ? `<img src="${c.imagen}" alt="${c.titulo}" class="post-thumb" loading="lazy">`
         : `<div class="post-thumb-placeholder">${c.imagen_texto || c.tipo.toUpperCase()}</div>`
@@ -194,8 +194,11 @@ document.addEventListener('DOMContentLoaded', async function() {
   const btnBarometro = document.getElementById('btn-barometro');
   if (btnBarometro) {
     const contenidos = await getContenidos();
-    // Buscar un contenido cuyo título contenga "Barómetro"
-    const barometroData = contenidos.find(c => c.titulo.toLowerCase().includes('barómetro'));
+    // Buscar la versión más reciente del Barómetro (soporta con y sin tilde)
+    const barometroData = contenidos.find(c => 
+      c.titulo.toLowerCase().includes('barómetro') || 
+      c.titulo.toLowerCase().includes('barometro')
+    );
     if (barometroData && barometroData.url && barometroData.url !== '#') {
       btnBarometro.href = barometroData.url;
     }

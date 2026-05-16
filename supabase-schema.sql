@@ -133,3 +133,20 @@ CREATE POLICY "Admin ALL Supporters" ON supporters TO authenticated USING (true)
 
 DROP POLICY IF EXISTS "Admin ALL Messages" ON contact_messages;
 CREATE POLICY "Admin ALL Messages" ON contact_messages TO authenticated USING (true) WITH CHECK (true);
+
+-- 5. DATOS DE EJEMPLO (Opcional, solo si están vacíos)
+INSERT INTO authors (name, cargo, bio, published) 
+SELECT 'César Pérez Guevara', 'Historiador', 'Especialista en la historia del derecho en la América colonial.', true
+WHERE NOT EXISTS (SELECT 1 FROM authors WHERE name = 'César Pérez Guevara');
+
+INSERT INTO authors (name, cargo, bio, published) 
+SELECT 'José J. Laorden', 'Investigador', 'Especialista en alianzas entre indígenas y españoles.', true
+WHERE NOT EXISTS (SELECT 1 FROM authors WHERE name = 'José J. Laorden');
+
+INSERT INTO contents (title, content_type, summary, published, author_id)
+SELECT 'Justicia Real en la América Española', 'conferencia', 'Resumen de la conferencia sobre el sistema jurídico colonial.', true, (SELECT id FROM authors LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM contents WHERE title = 'Justicia Real en la América Española');
+
+INSERT INTO events (title, description, event_date, location, event_type, published)
+SELECT 'Visita al Museo de América', 'Recorrido por el legado hispánico.', '2026-06-20 10:00:00', 'Madrid', 'Visita Cultural', true
+WHERE NOT EXISTS (SELECT 1 FROM events WHERE title = 'Visita al Museo de América');

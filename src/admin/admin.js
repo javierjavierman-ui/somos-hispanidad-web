@@ -123,13 +123,16 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   // ── CARGA DE DATOS DESDE SUPABASE ──────────────────
   async function loadAllData() {
-    await Promise.all([
-      loadEvents(),
-      loadContents(),
-      loadAuthors(),
-      loadSupporters(),
-      loadMessages()
-    ]);
+    console.log('🔄 Iniciando carga de datos...');
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    console.log('🔑 Sesión activa:', session ? session.user.email : 'NINGUNA');
+
+    // Cargar cada sección de forma independiente para que un error no bloquee todo
+    try { await loadEvents(); } catch(e) { console.error('Error eventos:', e); }
+    try { await loadContents(); } catch(e) { console.error('Error contenidos:', e); }
+    try { await loadAuthors(); } catch(e) { console.error('Error autores:', e); }
+    try { await loadSupporters(); } catch(e) { console.error('Error simpatizantes:', e); }
+    try { await loadMessages(); } catch(e) { console.error('Error mensajes:', e); }
   }
 
   async function loadEvents() {
@@ -150,16 +153,25 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 
   async function loadContents() {
-    const { data, error } = await supabaseClient.from('contents').select('*, authors(name)').order('created_at', { ascending: false });
     const tbody = document.querySelector('#panel-contenidos tbody');
+    if (!tbody) return;
+
+    const { data, error } = await supabaseClient
+      .from('contents')
+      .select('*, authors(name)')
+      .order('created_at', { ascending: false });
     
     if (error) {
-      console.error('Error Supabase (Contents):', error);
-      return tbody.innerHTML = `<tr><td colspan="6" style="color:red; padding:20px;">Error cargando contenidos: ${error.message}</td></tr>`;
+      console.error('❌ Error Supabase (Contents):', error);
+      tbody.innerHTML = `<tr><td colspan="6" style="color:red; padding:20px;">Error: ${error.message}</td></tr>`;
+      return;
     }
     
+    console.log('📦 Contenidos recibidos:', data);
+    
     if (!data || data.length === 0) {
-      return tbody.innerHTML = '<tr><td colspan="6" style="padding:20px;">No se encontraron contenidos. Asegúrate de haber ejecutado el SQL en Supabase.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" style="padding:20px; color:#666;">La tabla "contents" está vacía o no tienes permisos de lectura.</td></tr>';
+      return;
     }
     
     tbody.innerHTML = data.map(c => {

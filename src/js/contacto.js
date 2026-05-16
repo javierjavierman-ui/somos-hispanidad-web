@@ -4,7 +4,8 @@
  * Archivo: src/js/contacto.js
  *
  * Gestiona el formulario de contacto.
- * Conectado a Supabase: guarda mensajes en la tabla "mensajes".
+ * 1. Guarda el mensaje en Supabase (contact_messages)
+ * 2. Envía notificación por email vía EmailJS
  * =====================================================
  */
 
@@ -39,16 +40,44 @@ document.addEventListener('DOMContentLoaded', function () {
       btnSubmit.textContent = 'Enviando...';
     }
 
-    // Enviar a Supabase
-    const enviado = await guardarMensaje(nombre, email, asunto || 'Sin asunto', mensaje);
+    // 1. Guardar en Supabase
+    let guardadoOk = false;
+    try {
+      guardadoOk = await guardarMensaje(nombre, email, asunto || 'Sin asunto', mensaje);
+    } catch(err) {
+      console.warn('Supabase no disponible, continuando con envío de email:', err);
+    }
 
-    if (enviado) {
+    // 2. Enviar notificación por email vía EmailJS
+    let emailOk = false;
+    try {
+      if (typeof emailjs !== 'undefined') {
+        await emailjs.send(
+          'service_somoshispanidad',   // Service ID de EmailJS
+          'template_contacto',          // Template ID de EmailJS
+          {
+            from_name:  nombre,
+            from_email: email,
+            subject:    asunto || 'Sin asunto',
+            message:    mensaje,
+            to_email:   'contacto@somoshispanidad.es'
+          }
+        );
+        emailOk = true;
+      } else {
+        console.warn('EmailJS no cargado');
+      }
+    } catch(err) {
+      console.error('Error al enviar email con EmailJS:', err);
+    }
+
+    if (guardadoOk || emailOk) {
       mostrarExito();
     } else {
-      mostrarError('No se pudo enviar el mensaje. Inténtalo de nuevo o escríbenos a contacto@somoshispanidad.es.');
+      mostrarError('No se pudo enviar el mensaje. Inténtalo de nuevo o escríbenos a contacto@somoshispanidad.es');
       if (btnSubmit) {
         btnSubmit.disabled = false;
-        btnSubmit.textContent = 'Enviar mensaje';
+        btnSubmit.textContent = 'Enviar Mensaje';
       }
     }
   });

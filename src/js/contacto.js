@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function () {
     try {
       if (typeof emailjs !== 'undefined') {
         await emailjs.send(
-          'service_somoshispanidad',   // Service ID de EmailJS
-          'template_contacto',          // Template ID de EmailJS
+          'service_sfxfhke',    // Service ID
+          'template_5jjf7vs',   // Template ID
           {
             from_name:  nombre,
             from_email: email,

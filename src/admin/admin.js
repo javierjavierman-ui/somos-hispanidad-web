@@ -269,6 +269,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         document.getElementById('cont-titulo').value = data.title;
         document.getElementById('cont-tipo').value = data.content_type;
         document.getElementById('cont-url').value = data.youtube_url || '';
+        document.getElementById('cont-imagen').value = data.image_url || '';
         document.getElementById('cont-resumen').value = data.summary || '';
         document.getElementById('cont-publicado').checked = data.published;
         
@@ -352,6 +353,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       const content_type = document.getElementById('cont-tipo').value;
       const author_id = document.getElementById('cont-autor').value || null;
       const youtube_url = document.getElementById('cont-url').value;
+      const image_url = document.getElementById('cont-imagen').value || null;
       const summary = document.getElementById('cont-resumen').value;
       const published = document.getElementById('cont-publicado').checked;
 
@@ -360,7 +362,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       btnSubmit.disabled = true;
 
       const payload = {
-        title, content_type, author_id, youtube_url, summary, published
+        title, content_type, author_id, youtube_url, image_url, summary, published
       };
 
       let result;
@@ -622,6 +624,147 @@ document.addEventListener('DOMContentLoaded', async function () {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    });
+  }
+
+  // ── PANEL MARKETING ─────────────────────────────────
+  const panelMarketing = document.getElementById('panel-marketing');
+  
+  // Se activa cuando el usuario navega al panel de marketing
+  document.querySelectorAll('.admin-nav-link[data-panel]').forEach(link => {
+    link.addEventListener('click', function() {
+      if (this.getAttribute('data-panel') === 'marketing') {
+        initMarketing();
+      }
+    });
+  });
+
+  let simpatizantesCache = [];
+
+  async function initMarketing() {
+    // 1. Verificar estado EmailJS
+    const dotEl = document.getElementById('mkt-status-dot');
+    const txtEl = document.getElementById('mkt-status-text');
+    if (dotEl && txtEl) {
+      if (typeof emailjs !== 'undefined') {
+        dotEl.style.background = '#22c55e';
+        txtEl.textContent = 'EmailJS conectado y operativo.';
+      } else {
+        dotEl.style.background = '#ef4444';
+        txtEl.textContent = 'EmailJS no disponible. Comprueba la conexión.';
+      }
+    }
+
+    // 2. Cargar simpatizantes para el preview
+    const preview = document.getElementById('mkt-lista-preview');
+    const btnMasivo = document.getElementById('btn-enviar-masivo');
+    
+    const { data, error } = await supabaseClient
+      .from('supporters')
+      .select('name, email')
+      .is('unsubscribed_at', null)
+      .order('name');
+
+    if (error || !data) {
+      if (preview) preview.innerHTML = '<span style="color:red;">Error cargando simpatizantes: ' + (error?.message || 'desconocido') + '</span>';
+      return;
+    }
+
+    simpatizantesCache = data;
+
+    if (preview) {
+      if (data.length === 0) {
+        preview.innerHTML = '⚠️ No hay simpatizantes registrados en la base de datos.';
+        return;
+      }
+      preview.innerHTML = `
+        <strong>${data.length} simpatizantes activos:</strong><br>
+        <span style="color:#5a4a3a;">${data.slice(0,5).map(s => s.name).join(', ')}${data.length > 5 ? ` y ${data.length - 5} más...` : ''}</span>
+      `;
+      if (btnMasivo) btnMasivo.disabled = false;
+    }
+  }
+
+  // Botón enviar prueba
+  const btnPrueba = document.getElementById('btn-enviar-prueba');
+  if (btnPrueba) {
+    btnPrueba.addEventListener('click', async () => {
+      const asunto  = document.getElementById('mkt-asunto')?.value.trim();
+      const cuerpo  = document.getElementById('mkt-cuerpo')?.value.trim();
+      const firma   = document.getElementById('mkt-firma')?.value.trim() || 'Somos Hispanidad';
+      const testEmail = document.getElementById('mkt-test-email')?.value.trim();
+      const resultEl = document.getElementById('mkt-test-result');
+
+      if (!asunto || !cuerpo) { alert('Completa el asunto y el cuerpo del mensaje antes de enviar la prueba.'); return; }
+      if (!testEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(testEmail)) { alert('Introduce un email de prueba válido.'); return; }
+
+      btnPrueba.disabled = true;
+      btnPrueba.textContent = 'Enviando...';
+
+      try {
+        await emailjs.send('service_sfxfhke', 'template_5jjf7vs', {
+          from_name: firma,
+          from_email: 'contacto@somoshispanidad.es',
+          subject: '[PRUEBA] ' + asunto,
+          message: cuerpo,
+          to_email: testEmail
+        });
+        if (resultEl) { resultEl.style.display = 'block'; resultEl.style.background = '#f0fdf4'; resultEl.style.color = '#166534'; resultEl.textContent = '✅ Email de prueba enviado a ' + testEmail; }
+      } catch(err) {
+        if (resultEl) { resultEl.style.display = 'block'; resultEl.style.background = '#fef2f2'; resultEl.style.color = '#991b1b'; resultEl.textContent = '❌ Error: ' + err.text; }
+      }
+
+      btnPrueba.disabled = false;
+      btnPrueba.textContent = '📤 Enviar prueba';
+    });
+  }
+
+  // Botón envío masivo
+  const btnMasivo = document.getElementById('btn-enviar-masivo');
+  if (btnMasivo) {
+    btnMasivo.addEventListener('click', async () => {
+      const asunto  = document.getElementById('mkt-asunto')?.value.trim();
+      const cuerpo  = document.getElementById('mkt-cuerpo')?.value.trim();
+      const firma   = document.getElementById('mkt-firma')?.value.trim() || 'Somos Hispanidad';
+      const resultEl = document.getElementById('mkt-masivo-result');
+
+      if (!asunto || !cuerpo) { alert('Completa el asunto y el cuerpo del mensaje.'); return; }
+      if (simpatizantesCache.length === 0) { alert('No hay simpatizantes a quienes enviar.'); return; }
+
+      if (!confirm(`¿Confirmas el envío masivo a ${simpatizantesCache.length} simpatizantes?\n\nAsunto: "${asunto}"\n\nEsta acción no se puede deshacer.`)) return;
+
+      btnMasivo.disabled = true;
+      btnMasivo.textContent = 'Enviando... (0/' + simpatizantesCache.length + ')';
+
+      let enviados = 0, errores = 0;
+      for (const s of simpatizantesCache) {
+        try {
+          await emailjs.send('service_sfxfhke', 'template_5jjf7vs', {
+            from_name: firma,
+            from_email: 'contacto@somoshispanidad.es',
+            subject: asunto,
+            message: cuerpo,
+            to_email: s.email,
+            to_name: s.name
+          });
+          enviados++;
+        } catch(err) {
+          errores++;
+          console.error('Error enviando a ' + s.email, err);
+        }
+        btnMasivo.textContent = `Enviando... (${enviados + errores}/${simpatizantesCache.length})`;
+        // Pausa de 300ms para no saturar la API de EmailJS
+        await new Promise(r => setTimeout(r, 300));
+      }
+
+      if (resultEl) {
+        resultEl.style.display = 'block';
+        resultEl.style.background = errores === 0 ? '#f0fdf4' : '#fef2f2';
+        resultEl.style.color = errores === 0 ? '#166534' : '#991b1b';
+        resultEl.textContent = `✅ Enviados: ${enviados} | ❌ Errores: ${errores}`;
+      }
+      btnMasivo.disabled = false;
+      btnMasivo.textContent = '🚀 Enviar a todos los simpatizantes';
     });
   }
 

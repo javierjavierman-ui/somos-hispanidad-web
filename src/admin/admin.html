@@ -50,6 +50,10 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         Mensajes
       </a>
+      <a href="#" class="admin-nav-link" data-panel="marketing">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.92 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.1-1.1a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Marketing
+      </a>
     </nav>
     <div class="admin-sidebar-footer">
       <a href="../../index.html" class="admin-nav-link" style="opacity:0.6;font-size:0.7rem">← Ver web pública</a>
@@ -176,6 +180,78 @@
             <tr><td>5 May 2026</td><td>Laura López</td><td>laura@ejemplo.es</td><td>Colaboración</td><td><span class="admin-badge green">Leído</span></td><td><button class="admin-btn-sm">Ver</button></td></tr>
           </tbody>
         </table>
+      </div>
+    </div>
+
+    <!-- PANEL: MARKETING -->
+    <div class="admin-panel" id="panel-marketing">
+      <div class="admin-panel-header">
+        <h2>Marketing &amp; Comunicaciones</h2>
+      </div>
+      <div class="admin-supabase-note">
+        📧 Envía avisos y recordatorios a los simpatizantes mediante EmailJS. <strong>Prueba siempre el mensaje antes de enviarlo masivamente.</strong>
+      </div>
+
+      <div style="max-width: 700px; margin: 24px auto 0; display: flex; flex-direction: column; gap: 24px;">
+
+        <!-- REDACTAR -->
+        <div style="background:#fff; border: 1px solid #e8e0d0; border-radius: 8px; padding: 32px;">
+          <h3 style="font-family:'Cinzel',serif; font-size:1rem; margin-bottom:24px; color:#3a2a1a;">✍️ Redactar Campaña</h3>
+          <div class="admin-form-group">
+            <label>Asunto del mensaje *</label>
+            <input type="text" id="mkt-asunto" class="admin-form-input" placeholder="Ej: Recordatorio — Conferencia del Duque de Moctezuma">
+          </div>
+          <div class="admin-form-group">
+            <label>Cuerpo del mensaje *</label>
+            <textarea id="mkt-cuerpo" class="admin-form-input" rows="8" placeholder="Escribe aquí el contenido del aviso o recordatorio...&#10;&#10;Recuerda que el destinatario recibirá este texto tal cual."></textarea>
+          </div>
+          <div class="admin-form-group">
+            <label>Firma / Remitente</label>
+            <input type="text" id="mkt-firma" class="admin-form-input" value="Somos Hispanidad — Asociación Cultural">
+          </div>
+        </div>
+
+        <!-- PASO 1: PRUEBA -->
+        <div style="background:#fff; border: 2px solid #c9a84c; border-radius: 8px; padding: 28px;">
+          <h3 style="font-family:'Cinzel',serif; font-size:0.85rem; letter-spacing:0.08em; color:#c9a84c; text-transform:uppercase; margin-bottom: 16px;">Paso 1 — Enviar email de prueba</h3>
+          <p style="font-size:0.83rem; color:#5a4a3a; margin-bottom:16px;">Recibirás el email en la dirección indicada para verificar el formato antes del envío masivo.</p>
+          <div style="display:flex; gap:12px; align-items:flex-end; flex-wrap: wrap;">
+            <div style="flex:1; min-width: 200px;">
+              <label style="font-size:0.75rem; display:block; margin-bottom:4px;">Email de prueba</label>
+              <input type="email" id="mkt-test-email" class="admin-form-input" placeholder="tu@email.com">
+            </div>
+            <button id="btn-enviar-prueba" class="admin-btn admin-btn-outline" style="height:40px; white-space:nowrap;">📤 Enviar prueba</button>
+          </div>
+          <div id="mkt-test-result" style="margin-top:12px; font-size:0.82rem; padding: 10px; border-radius: 4px; display:none;"></div>
+        </div>
+
+        <!-- PASO 2: MASIVO -->
+        <div style="background:#fff; border: 1px solid #e8e0d0; border-radius: 8px; padding: 28px;">
+          <h3 style="font-family:'Cinzel',serif; font-size:0.85rem; letter-spacing:0.08em; color:#3a2a1a; text-transform:uppercase; margin-bottom: 16px;">Paso 2 — Envío masivo a simpatizantes</h3>
+          <div id="mkt-lista-preview" style="background:#f9f6f0; padding:16px; border-radius:6px; font-size:0.83rem; color:#5a4a3a; margin-bottom:20px;">
+            Cargando lista de simpatizantes...
+          </div>
+          <div style="background: #fff8e1; border-left: 3px solid #f59e0b; padding:12px 16px; border-radius:4px; font-size:0.82rem; color:#78350f; margin-bottom:20px;">
+            ⚠️ <strong>Atención:</strong> Esta acción enviará un email a <strong>todos los simpatizantes activos</strong>. Asegúrate de haber realizado el envío de prueba previamente.
+          </div>
+          <button id="btn-enviar-masivo" class="admin-btn admin-btn-primary" disabled style="width:100%;">
+            🚀 Enviar a todos los simpatizantes
+          </button>
+          <div id="mkt-masivo-result" style="margin-top:12px; font-size:0.82rem; padding:10px; border-radius:4px; display:none;"></div>
+        </div>
+
+        <!-- ESTADO DEL SERVICIO -->
+        <div style="background:#fff; border: 1px solid #e8e0d0; border-radius: 8px; padding: 20px;">
+          <h3 style="font-family:'Cinzel',serif; font-size:0.85rem; color:#3a2a1a; margin-bottom:12px;">🔌 Estado del Servicio EmailJS</h3>
+          <div style="display:flex; align-items:center; gap:8px; font-size:0.83rem; color:#5a4a3a;">
+            <span id="mkt-status-dot" style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#ccc; flex-shrink:0;"></span>
+            <span id="mkt-status-text">Comprobando conexión...</span>
+          </div>
+          <div style="margin-top: 12px; font-size: 0.78rem; color: #9a8a7a;">
+            Service ID: <code>service_sfxfhke</code> · Template: <code>template_5jjf7vs</code>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -333,6 +409,10 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/supabaseClient.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  (function(){ emailjs.init({ publicKey: '0slY_AJYvHsj932ME' }); })();
+</script>
 <script src="admin.js"></script>
 </body>
 </html>

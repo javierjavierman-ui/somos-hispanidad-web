@@ -690,7 +690,20 @@ document.addEventListener('DOMContentLoaded', async function () {
   if (btnPrueba) {
     btnPrueba.addEventListener('click', async () => {
       const asunto  = document.getElementById('mkt-asunto')?.value.trim();
-      const cuerpo  = document.getElementById('mkt-cuerpo')?.value.trim();
+      let cuerpo  = document.getElementById('mkt-cuerpo')?.value.trim();
+      const hora = document.getElementById('mkt-hora')?.value.trim();
+      const lugar = document.getElementById('mkt-lugar')?.value.trim();
+      const ubicacion = document.getElementById('mkt-ubicacion')?.value.trim();
+      
+      let detalles = [];
+      if (hora) detalles.push(`Hora: ${hora}`);
+      if (lugar) detalles.push(`Lugar: ${lugar}`);
+      if (ubicacion) detalles.push(`Ubicación: ${ubicacion}`);
+      
+      if (detalles.length > 0) {
+        cuerpo = cuerpo + '\n\n---\nDetalles del evento:\n' + detalles.join('\n');
+      }
+
       const firma   = document.getElementById('mkt-firma')?.value.trim() || 'Somos Hispanidad';
       const testEmail = document.getElementById('mkt-test-email')?.value.trim();
       const resultEl = document.getElementById('mkt-test-result');
@@ -724,7 +737,20 @@ document.addEventListener('DOMContentLoaded', async function () {
   if (btnMasivo) {
     btnMasivo.addEventListener('click', async () => {
       const asunto  = document.getElementById('mkt-asunto')?.value.trim();
-      const cuerpo  = document.getElementById('mkt-cuerpo')?.value.trim();
+      let cuerpo  = document.getElementById('mkt-cuerpo')?.value.trim();
+      const hora = document.getElementById('mkt-hora')?.value.trim();
+      const lugar = document.getElementById('mkt-lugar')?.value.trim();
+      const ubicacion = document.getElementById('mkt-ubicacion')?.value.trim();
+      
+      let detalles = [];
+      if (hora) detalles.push(`Hora: ${hora}`);
+      if (lugar) detalles.push(`Lugar: ${lugar}`);
+      if (ubicacion) detalles.push(`Ubicación: ${ubicacion}`);
+      
+      if (detalles.length > 0) {
+        cuerpo = cuerpo + '\n\n---\nDetalles del evento:\n' + detalles.join('\n');
+      }
+
       const firma   = document.getElementById('mkt-firma')?.value.trim() || 'Somos Hispanidad';
       const resultEl = document.getElementById('mkt-masivo-result');
 

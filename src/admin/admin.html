@@ -201,6 +201,22 @@
             <label>Asunto del mensaje *</label>
             <input type="text" id="mkt-asunto" class="admin-form-input" placeholder="Ej: Recordatorio — Conferencia del Duque de Moctezuma">
           </div>
+          
+          <div style="display:flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
+            <div style="flex:1; min-width: 120px;">
+              <label style="font-size: 0.8rem; font-weight: 600; margin-bottom: 6px; display: block; color: var(--ink-deep);">Hora</label>
+              <input type="text" id="mkt-hora" class="admin-form-input" placeholder="Ej: 19:00 h">
+            </div>
+            <div style="flex:1; min-width: 120px;">
+              <label style="font-size: 0.8rem; font-weight: 600; margin-bottom: 6px; display: block; color: var(--ink-deep);">Lugar</label>
+              <input type="text" id="mkt-lugar" class="admin-form-input" placeholder="Ej: Salón de actos">
+            </div>
+            <div style="flex:1; min-width: 120px;">
+              <label style="font-size: 0.8rem; font-weight: 600; margin-bottom: 6px; display: block; color: var(--ink-deep);">Ubicación</label>
+              <input type="text" id="mkt-ubicacion" class="admin-form-input" placeholder="Ej: Madrid">
+            </div>
+          </div>
+
           <div class="admin-form-group">
             <label>Cuerpo del mensaje *</label>
             <textarea id="mkt-cuerpo" class="admin-form-input" rows="8" placeholder="Escribe aquí el contenido del aviso o recordatorio...&#10;&#10;Recuerda que el destinatario recibirá este texto tal cual."></textarea>
@@ -289,6 +305,10 @@
       <div class="admin-form-group">
         <label>Enlace (YouTube o PDF)</label>
         <input type="url" id="cont-url" class="admin-form-input" placeholder="https://...">
+      </div>
+      <div class="admin-form-group">
+        <label>URL de la miniatura/imagen</label>
+        <input type="url" id="cont-imagen" class="admin-form-input" placeholder="https://...">
       </div>
       <div class="admin-form-group">
         <label>Resumen / Descripción</label>
